@@ -10,7 +10,9 @@ export function Reels() {
 
   return (
     <section id="reels" className={styles.section}>
-      <h2 className={styles.heading}>{t({ en: 'Reels', ar: 'ريلز' })}</h2>
+      <h2 className={styles.heading} data-reveal>
+        {t({ en: 'Reels', ar: 'ريلز' })}
+      </h2>
       <ul className={styles.strip}>
         {reels.map((reel) => (
           <li key={reel.id} className={styles.card}>

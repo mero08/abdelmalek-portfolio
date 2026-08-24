@@ -11,7 +11,9 @@ export function Featured() {
 
   return (
     <section id="featured" className={styles.section}>
-      <h2 className={styles.heading}>{t({ en: 'Selected films', ar: 'أفلام مختارة' })}</h2>
+      <h2 className={styles.heading} data-reveal>
+        {t({ en: 'Selected films', ar: 'أفلام مختارة' })}
+      </h2>
       <ul className={styles.list}>
         {list.map((film) => (
           <li key={film.slug}>

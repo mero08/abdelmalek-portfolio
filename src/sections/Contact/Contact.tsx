@@ -7,7 +7,9 @@ export function Contact() {
 
   return (
     <section id="contact" className={styles.section}>
-      <h2 className={styles.heading}>{t({ en: 'Contact', ar: 'تواصل' })}</h2>
+      <h2 className={styles.heading} data-reveal>
+        {t({ en: 'Contact', ar: 'تواصل' })}
+      </h2>
       <a href={`mailto:${site.email}`} className={styles.email}>
         {site.email}
       </a>

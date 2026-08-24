@@ -7,7 +7,9 @@ export function About() {
 
   return (
     <section id="about" className={styles.section}>
-      <h2 className={styles.heading}>{t({ en: 'About', ar: 'نبذة' })}</h2>
+      <h2 className={styles.heading} data-reveal>
+        {t({ en: 'About', ar: 'نبذة' })}
+      </h2>
       <p className={styles.body}>{t(site.about)}</p>
     </section>
   )
