@@ -97,8 +97,8 @@ Audit notes: `.superpowers/sdd/minh-live-audit.md`
 | `--fg-bright` | slightly brighter taupe/off-white for active titles |
 | `--accent` | `#ff4d2e` (orange-red; tune to match reference) |
 | `--bar-ink` | `#0d0d0d` text on accent bar |
-| Display font | Licensed geometric bold sans close to Avant Garde (e.g. Syne or equivalent webfont; document chosen face in implementation) |
-| Body font | Nunito Sans (or close), Arabic: IBM Plex Sans Arabic |
+| Display font | **Syne** (700/800) as the licensed stand-in for Avant Garde |
+| Body font | **Nunito Sans** (EN); **IBM Plex Sans Arabic** (AR) |
 
 ## Components (experience layer)
 
@@ -194,4 +194,4 @@ Handoff package = this spec + running prototype (`npm run dev` / `npm run build`
 
 - Final hero/about/contact copy (EN/AR)
 - Real email, socials, covers, embeds
-- Exact webfont licensing choice for display face
+- Optional later swap of Syne for a closer licensed Avant Garde equivalent
