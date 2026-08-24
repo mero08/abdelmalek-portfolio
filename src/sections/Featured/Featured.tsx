@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { films } from '../../content/films'
 import { useLocale } from '../../i18n/useLocale'
-import { CoverImage } from '../../components/CoverImage/CoverImage'
+import { CoverTransition } from '../../components/webgl/CoverTransition'
 import styles from './Featured.module.css'
 
 export function Featured() {
@@ -19,7 +19,7 @@ export function Featured() {
           <li key={film.slug}>
             <Link to={`/work/${film.slug}`} className={styles.card} aria-label={t(film.title)}>
               <div className={styles.media}>
-                <CoverImage cover={film.cover} title={t(film.title)} />
+                <CoverTransition cover={film.cover} title={t(film.title)} />
               </div>
               <div className={styles.meta}>
                 <h3>{t(film.title)}</h3>
