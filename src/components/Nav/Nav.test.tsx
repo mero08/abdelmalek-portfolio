@@ -26,4 +26,19 @@ describe('Nav', () => {
     expect(document.documentElement.lang).toBe('ar')
     expect(document.documentElement.dir).toBe('rtl')
   })
+
+  it('renders socials as text links', () => {
+    render(
+      <MemoryRouter>
+        <LocaleProvider>
+          <Nav />
+        </LocaleProvider>
+      </MemoryRouter>,
+    )
+    const instagram = screen
+      .getAllByRole('link')
+      .find((el) => el.getAttribute('href') === 'https://instagram.com/')
+    expect(instagram).toBeTruthy()
+    expect(instagram).toHaveTextContent('Instagram')
+  })
 })

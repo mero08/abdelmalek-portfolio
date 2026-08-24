@@ -12,10 +12,18 @@ export type SocialLink = {
   url: string
 }
 
+export type HeroContent = {
+  label: LocaleString
+  lines: LocaleString[]
+  accentLineIndexes: number[]
+}
+
 export type SiteContent = {
   name: string
   role: LocaleString
+  hero: HeroContent
   about: LocaleString
+  aboutAlt: LocaleString
   email: string
   socials: SocialLink[]
 }

@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Nunito+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   --bg: #0d0d0d;
   --bg-elevated: #161616;
-  --fg: #f2f2f2;
-  --fg-muted: #a0a0a0;
-  --line: rgba(242, 242, 242, 0.12);
-  --accent: #e8e4dc;
+  --fg: #b7ab98;
+  --fg-bright: #e8e0d4;
+  --fg-muted: #8a7f72;
+  --line: rgba(183, 171, 152, 0.18);
+  --accent: #ff4d2e;
+  --bar-ink: #0d0d0d;
   --font-display: 'Syne', system-ui, sans-serif;
-  --font-body: 'Instrument Sans', system-ui, sans-serif;
-  --font-arabic: 'IBM Plex Sans Arabic', 'Instrument Sans', sans-serif;
+  --font-body: 'Nunito Sans', system-ui, sans-serif;
+  --font-arabic: 'IBM Plex Sans Arabic', 'Nunito Sans', sans-serif;
   --nav-h: 4.5rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }

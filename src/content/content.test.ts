@@ -27,4 +27,12 @@ describe('content modules', () => {
     const { reels } = await import('./reels')
     expect(Array.isArray(reels)).toBe(true)
   })
+
+  it('exposes placeholder hero lines and about alt', async () => {
+    const { site } = await import('./site')
+    expect(site.hero.lines.length).toBeGreaterThan(1)
+    expect(site.hero.accentLineIndexes.length).toBeGreaterThan(0)
+    expect(site.aboutAlt.en.length).toBeGreaterThan(0)
+    expect(site.aboutAlt.ar.length).toBeGreaterThan(0)
+  })
 })

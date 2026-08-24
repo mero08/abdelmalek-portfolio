@@ -1,30 +1,31 @@
 .section {
-  padding: clamp(5rem, 14vh, 9rem) clamp(1.5rem, 5vw, 4rem);
-  border-top: 1px solid var(--line);
+  position: relative;
+  z-index: 1;
+  padding: clamp(5rem, 14vh, 9rem) clamp(1.5rem, 6vw, 5rem);
 }
 
-.heading {
-  margin: 0 0 2rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: 700;
-  letter-spacing: 0.02em;
+.kicker {
+  margin: 0 0 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
 }
 
 .email {
   display: block;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   font-family: var(--font-display);
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  text-decoration-color: var(--line);
-  transition: text-decoration-color 0.25s var(--ease-out);
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg-bright);
+  transition: color 0.25s var(--ease-out);
 }
 
 .email:hover {
-  text-decoration-color: var(--fg);
+  color: var(--accent);
 }
 
 .socials {
@@ -37,20 +38,20 @@
 }
 
 .socials a {
-  color: var(--fg-muted);
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
+  color: var(--fg);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   transition: color 0.25s var(--ease-out);
 }
 
 .socials a:hover {
-  color: var(--fg);
+  color: var(--fg-bright);
 }
 
 .closing {
-  margin: clamp(3rem, 8vh, 5rem) 0 0;
-  font-size: 0.85rem;
+  margin-top: clamp(3rem, 8vh, 5rem);
+  font-size: 0.95rem;
   color: var(--fg-muted);
-  letter-spacing: 0.04em;
+  max-width: 28rem;
 }

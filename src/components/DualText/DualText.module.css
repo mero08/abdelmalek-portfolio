@@ -1,0 +1,29 @@
+.root {
+  position: relative;
+  display: grid;
+  cursor: default;
+  outline: none;
+}
+
+.primary,
+.alt {
+  grid-area: 1 / 1;
+  transition: opacity 0.32s var(--ease-out);
+}
+
+.alt {
+  opacity: 0;
+  color: var(--fg-bright);
+}
+
+.root:hover .primary,
+.root:focus-visible .primary,
+.root[data-revealed='true'] .primary {
+  opacity: 0;
+}
+
+.root:hover .alt,
+.root:focus-visible .alt,
+.root[data-revealed='true'] .alt {
+  opacity: 1;
+}

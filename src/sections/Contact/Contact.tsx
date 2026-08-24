@@ -1,3 +1,4 @@
+import { DualText } from '../../components/DualText/DualText'
 import { site } from '../../content/site'
 import { useLocale } from '../../i18n/useLocale'
 import styles from './Contact.module.css'
@@ -7,9 +8,9 @@ export function Contact() {
 
   return (
     <section id="contact" className={styles.section}>
-      <h2 className={styles.heading} data-reveal>
-        {t({ en: 'Contact', ar: 'تواصل' })}
-      </h2>
+      <p className={styles.kicker} data-reveal>
+        {t({ en: 'Connect', ar: 'تواصل' })}
+      </p>
       <a href={`mailto:${site.email}`} className={styles.email}>
         {site.email}
       </a>
@@ -22,12 +23,17 @@ export function Contact() {
           </li>
         ))}
       </ul>
-      <p className={styles.closing}>
-        {t({
+      <DualText
+        className={styles.closing}
+        primary={t({
           en: 'Available for selective projects.',
           ar: 'متاح لعمل انتقائي.',
         })}
-      </p>
+        alt={t({
+          en: '100% chance I read the email.',
+          ar: 'أقرأ الرسائل دائماً.',
+        })}
+      />
     </section>
   )
 }

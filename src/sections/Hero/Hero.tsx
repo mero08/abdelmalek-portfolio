@@ -17,8 +17,20 @@ export function Hero() {
         {webglEnabled && <HeroScene />}
       </div>
       <div className={styles.content}>
-        <h1 className={styles.name}>{site.name}</h1>
-        <p className={styles.role}>{t(site.role)}</p>
+        <p className={styles.label}>{t(site.hero.label)}</p>
+        <h1 className={styles.manifesto}>
+          {site.hero.lines.map((line, index) => {
+            const accent = site.hero.accentLineIndexes.includes(index)
+            return (
+              <span
+                key={`${line.en}-${index}`}
+                className={accent ? styles.accentLine : styles.line}
+              >
+                {t(line)}
+              </span>
+            )
+          })}
+        </h1>
         <div className={styles.scroll}>
           <span className={styles.scrollLine} aria-hidden />
           <span>{t({ en: 'Scroll', ar: 'مرر' })}</span>

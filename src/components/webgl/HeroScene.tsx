@@ -38,7 +38,7 @@ const fragmentShader = `
 
     vec3 dark = vec3(0.051, 0.051, 0.051);
     vec3 lift = vec3(0.094, 0.094, 0.094);
-    vec3 glow = vec3(0.91, 0.89, 0.86) * 0.07;
+    vec3 glow = vec3(1.0, 0.30, 0.18) * 0.08;
 
     vec3 color = mix(dark, lift, blend * 0.45);
     color += glow * pow(blend, 2.0) * 0.55;

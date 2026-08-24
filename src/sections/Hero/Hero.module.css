@@ -2,11 +2,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
   padding: clamp(5rem, 14vh, 9rem) clamp(1.5rem, 5vw, 4rem);
-  padding-top: calc(var(--nav-h) + 2rem);
 }
 
 .canvas {
@@ -25,7 +24,7 @@
     ),
     radial-gradient(
       ellipse 55% 45% at 72% 78%,
-      rgba(232, 228, 220, 0.045) 0%,
+      rgba(255, 77, 46, 0.06) 0%,
       transparent 58%
     ),
     var(--bg);
@@ -34,31 +33,48 @@
 .content {
   position: relative;
   z-index: 1;
-  max-width: 52rem;
+  max-width: min(52rem, 100%);
+  margin-inline: auto;
+  text-align: center;
 }
 
-.name {
+.label {
+  margin: 0 0 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.manifesto {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 9vw, 6.5rem);
+  font-size: clamp(3rem, 12vw, 7.5rem);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
 }
 
-.role {
-  margin: 1.25rem 0 0;
-  font-size: clamp(1rem, 2.5vw, 1.35rem);
-  color: var(--fg-muted);
-  letter-spacing: 0.04em;
+.line {
+  color: var(--fg-bright);
+}
+
+.accentLine {
+  color: var(--accent);
 }
 
 .scroll {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   margin-top: clamp(3rem, 8vh, 5rem);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fg-muted);
