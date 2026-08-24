@@ -1,0 +1,137 @@
+.page {
+  min-height: 100vh;
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  max-height: min(70vh, 42rem);
+  overflow: hidden;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--line);
+}
+
+.content {
+  padding: clamp(3rem, 8vh, 5rem) clamp(1.5rem, 5vw, 4rem) clamp(5rem, 14vh, 9rem);
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition: color 0.25s var(--ease-out);
+}
+
+.back:hover {
+  color: var(--accent);
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+}
+
+.hook {
+  margin: 1rem 0 0;
+  color: var(--fg-muted);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.5;
+}
+
+.player {
+  margin-bottom: 2.5rem;
+}
+
+.story {
+  margin-bottom: 2.5rem;
+}
+
+.story p {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.role {
+  margin-top: 1.25rem !important;
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.still {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+}
+
+.adjacent {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.adjacent a {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: color 0.25s var(--ease-out);
+}
+
+.adjacent a:hover {
+  color: var(--accent);
+}
+
+.next {
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+.notFound {
+  padding: clamp(5rem, 14vh, 9rem) clamp(1.5rem, 5vw, 4rem);
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.notFound p {
+  margin: 0 0 1.5rem;
+  color: var(--fg-muted);
+}
+
+.notFound a {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition: color 0.25s var(--ease-out);
+}
+
+.notFound a:hover {
+  color: var(--accent);
+}
