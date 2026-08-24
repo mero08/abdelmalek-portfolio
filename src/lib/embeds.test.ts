@@ -26,4 +26,13 @@ describe('embeds', () => {
   it('returns null for invalid urls', () => {
     expect(toEmbedSrc('youtube', 'https://example.com')).toBeNull()
   })
+
+  it('appends autoplay when requested', () => {
+    expect(
+      toEmbedSrc('youtube', 'https://www.youtube.com/watch?v=abc123XYZ_-', { autoplay: true }),
+    ).toBe('https://www.youtube.com/embed/abc123XYZ_-?autoplay=1')
+    expect(toEmbedSrc('vimeo', 'https://vimeo.com/347119375', { autoplay: true })).toBe(
+      'https://player.vimeo.com/video/347119375?autoplay=1',
+    )
+  })
 })

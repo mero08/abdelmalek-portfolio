@@ -27,13 +27,25 @@ function vimeoId(url: string): string | null {
   }
 }
 
-export function toEmbedSrc(provider: EmbedProvider, url: string): string | null {
+export function toEmbedSrc(
+  provider: EmbedProvider,
+  url: string,
+  options?: { autoplay?: boolean },
+): string | null {
+  let base: string | null = null
+
   if (provider === 'youtube') {
     const id = youtubeId(url)
-    return id ? `https://www.youtube.com/embed/${id}` : null
+    base = id ? `https://www.youtube.com/embed/${id}` : null
+  } else {
+    const id = vimeoId(url)
+    base = id ? `https://player.vimeo.com/video/${id}` : null
   }
-  const id = vimeoId(url)
-  return id ? `https://player.vimeo.com/video/${id}` : null
+
+  if (!base || !options?.autoplay) return base
+
+  const sep = base.includes('?') ? '&' : '?'
+  return `${base}${sep}autoplay=1`
 }
 
 export function toWatchUrl(provider: EmbedProvider, url: string): string {

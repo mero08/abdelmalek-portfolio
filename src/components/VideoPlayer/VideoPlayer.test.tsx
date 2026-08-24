@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { VideoPlayer } from './VideoPlayer'
@@ -18,7 +18,11 @@ describe('VideoPlayer', () => {
     await user.click(screen.getByRole('button', { name: /play test reel/i }))
     expect(screen.getByTitle('Test Reel')).toHaveAttribute(
       'src',
-      'https://www.youtube.com/embed/abc123XYZ_-',
+      'https://www.youtube.com/embed/abc123XYZ_-?autoplay=1',
+    )
+    expect(screen.getByRole('link', { name: /open video/i })).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/watch?v=abc123XYZ_-',
     )
   })
 
@@ -33,7 +37,10 @@ describe('VideoPlayer', () => {
       />,
     )
     await user.click(screen.getByRole('button', { name: /play broken/i }))
-    expect(screen.getByText(/video unavailable/i)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /open on youtube|open video/i })).toBeInTheDocument()
+    const overlay = screen.getByText(/video unavailable/i).parentElement!
+    expect(within(overlay).getByRole('link', { name: /open video/i })).toHaveAttribute(
+      'href',
+      'https://example.com/nope',
+    )
   })
 })

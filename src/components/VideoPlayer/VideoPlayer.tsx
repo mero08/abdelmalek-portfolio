@@ -14,6 +14,10 @@ type Props = {
 export function VideoPlayer({ provider, url, cover, title }: Props) {
   const [active, setActive] = useState(false)
   const embed = useMemo(() => toEmbedSrc(provider, url), [provider, url])
+  const activeEmbed = useMemo(
+    () => toEmbedSrc(provider, url, { autoplay: true }),
+    [provider, url],
+  )
   const watch = useMemo(() => toWatchUrl(provider, url), [provider, url])
 
   if (active && !embed) {
@@ -35,11 +39,14 @@ export function VideoPlayer({ provider, url, cover, title }: Props) {
       <div className={styles.frame}>
         <iframe
           className={styles.iframe}
-          src={embed}
+          src={activeEmbed ?? embed}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
+        <a className={styles.watchLink} href={watch} target="_blank" rel="noreferrer">
+          Open video
+        </a>
       </div>
     )
   }
