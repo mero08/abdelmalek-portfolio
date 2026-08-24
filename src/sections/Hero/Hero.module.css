@@ -16,6 +16,21 @@
   pointer-events: none;
 }
 
+.canvasFallback {
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 38%,
+      rgba(22, 22, 22, 0.95) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 72% 78%,
+      rgba(232, 228, 220, 0.045) 0%,
+      transparent 58%
+    ),
+    var(--bg);
+}
+
 .content {
   position: relative;
   z-index: 1;
