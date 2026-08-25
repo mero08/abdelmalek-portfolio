@@ -1,29 +1,75 @@
 .root {
   position: relative;
   display: grid;
-  cursor: default;
+  width: fit-content;
+  max-width: 100%;
+  overflow: visible;
   outline: none;
+  padding: 0.15em 0.2em;
+  pointer-events: auto;
+  --mx: 0px;
+  --my: 0px;
+  --lens-size: 0px;
 }
 
 .primary,
-.alt {
+.reveal {
   grid-area: 1 / 1;
+}
+
+.primary {
+  color: var(--fg);
+  pointer-events: none;
+}
+
+.reveal {
+  pointer-events: none !important;
+  z-index: 2;
+  background: var(--accent);
+  color: var(--bar-ink);
+  padding: 40vh 40vw;
+  margin: -40vh -40vw;
+  box-sizing: content-box;
+  -webkit-mask-image: url('/cursor-circle-mask.svg');
+  mask-image: url('/cursor-circle-mask.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: var(--lens-size);
+  mask-size: var(--lens-size);
+  -webkit-mask-position: calc(var(--mx) - var(--lens-size) / 2 + 40vw)
+    calc(var(--my) - var(--lens-size) / 2 + 40vh);
+  mask-position: calc(var(--mx) - var(--lens-size) / 2 + 40vw)
+    calc(var(--my) - var(--lens-size) / 2 + 40vh);
+}
+
+.alt {
+  color: var(--bar-ink);
+}
+
+.fallback {
+  cursor: default;
+}
+
+.altFallback {
+  grid-area: 1 / 1;
+  opacity: 0;
+  color: var(--fg-bright);
   transition: opacity 0.32s var(--ease-out);
 }
 
-.alt {
-  opacity: 0;
-  color: var(--fg-bright);
+.primary,
+.altFallback {
+  grid-area: 1 / 1;
 }
 
-.root:hover .primary,
-.root:focus-visible .primary,
-.root[data-revealed='true'] .primary {
+.fallback:hover .primary,
+.fallback:focus-visible .primary,
+.fallback[data-revealed='true'] .primary {
   opacity: 0;
 }
 
-.root:hover .alt,
-.root:focus-visible .alt,
-.root[data-revealed='true'] .alt {
+.fallback:hover .altFallback,
+.fallback:focus-visible .altFallback,
+.fallback[data-revealed='true'] .altFallback {
   opacity: 1;
 }
