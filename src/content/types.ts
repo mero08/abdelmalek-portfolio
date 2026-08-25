@@ -15,7 +15,9 @@ export type SocialLink = {
 export type HeroContent = {
   label: LocaleString
   lines: LocaleString[]
+  altLines: LocaleString[]
   accentLineIndexes: number[]
+  altAccentLineIndexes: number[]
 }
 
 export type SiteContent = {

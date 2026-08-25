@@ -15,7 +15,7 @@ Live Playwright inspection of minhpham.design and frames from the user’s recor
 
 - Fixed full-page Three.js canvas behind UI
 - Corner chrome (logo TL, vertical nav TR, socials BL, sound BR — **sound out of scope**)
-- Custom cursor / red spotlight dual-text — **custom cursor out of scope**; dual-text kept as **hover layers**
+- Custom cursor / red spotlight dual-text — **in scope for Hero manifesto + DualText** (circular lens mask)
 - Palette: near-black `#0d0d0d`, warm taupe text `rgb(183, 171, 152)`, orange-red accent
 - Display type: huge, tight, stacked; body: clean sans
 - Interactive oversized lists (skills/clients) with highlight bar
@@ -27,8 +27,8 @@ Audit notes: `.superpowers/sdd/minh-live-audit.md`
 
 | Topic | Decision |
 |--------|----------|
-| Fidelity | Visual + motion language (option B) — **no sound, no custom cursor** |
-| Dual text | Hover dual-text (stacked layers; system cursor) |
+| Fidelity | Visual + motion language (option B) — **no sound**; **dynamic circle cursor on Hero + DualText** |
+| Dual text | Circular lens cursor reveals Layer 2 inside the circle; Layer 1 outside |
 | Chrome | Corner chrome like Minh (logo TL, vertical nav TR, socials BL) |
 | Hero copy | Temporary placeholder EN/AR stubs (final copy later) |
 | Work UI | Films = Minh-style huge title list → `/work/:slug`; reels = simpler strip |
@@ -37,10 +37,10 @@ Audit notes: `.superpowers/sdd/minh-live-audit.md`
 
 ## Non-goals
 
-- Custom cursor / red circular spotlight cursor
 - Sound on/off and ambient audio
 - Cloning Minh’s full 3D globe / client-world scenes
 - Cloning Minh’s witty copy verbatim
+- Site-wide cursor lens on every element (Films list, chrome, etc. stay system/idle cursor behavior)
 - New backend, CMS, contact form, or custom icon pack
 - Final production media/copy (placeholders OK)
 
@@ -110,12 +110,13 @@ Audit notes: `.superpowers/sdd/minh-live-audit.md`
 - Language toggle EN | ع near TR
 - Does not include sound control
 
-### DualText
+### DualText / ManifestoLens
 
 - Two perfectly stacked LocaleString layers (primary + alt)
-- On hover/focus, reveal alt (CSS mask, clip, or opacity swap)
-- Works with system cursor
-- Used in About (required); optional on Contact secondary lines
+- Site-wide idle: small glowing orange circle cursor
+- Over Hero manifesto or DualText: cursor expands; SVG **mask circle** reveals Layer 2 + accent fill only inside the lens (see `2026-08-25-minh-circular-lens-cursor-design.md`)
+- Touch / `prefers-reduced-motion`: no custom cursor; DualText falls back to opacity hover/focus swap
+- Used in Hero (required), About (required); Contact DualText inherits the same behavior
 
 ### FilmsList
 
@@ -144,8 +145,10 @@ Extend static content (illustrative):
 ```ts
 hero: {
   label?: LocaleString
-  lines: LocaleString[]  // stacked manifesto lines (placeholders)
+  lines: LocaleString[]      // Layer 1 manifesto
+  altLines: LocaleString[]   // Layer 2 under lens
   accentLineIndexes?: number[]
+  altAccentLineIndexes?: number[]
 }
 about: { primary: LocaleString; alt: LocaleString }
 ```
@@ -153,8 +156,8 @@ about: { primary: LocaleString; alt: LocaleString }
 Placeholder English examples (temporary — replace later):
 
 - Label: `Abdelmalek Marwan`
-- Lines: `CUTTING`, `STORIES`, `THAT`, `LAND`
-- Accent on `STORIES` (or similar)
+- Lines: `CUTTING`, `STORIES`, `THAT`, `LAND` (accent on `STORIES`)
+- Alt lines: `FINDING`, `MOMENTS`, `THAT`, `HIT` (accent on `MOMENTS`)
 - About primary / alt: professional vs slightly bolder alternate (placeholders)
 
 Arabic stubs required for bilingual layout testing.
@@ -163,8 +166,8 @@ Arabic stubs required for bilingual layout testing.
 
 - Lenis smooth scroll + GSAP section reveals
 - FilmsList active-bar transition eased
-- DualText hover transition ~200–400ms
-- Reduced motion: disable Lenis theater + WebGL; keep usable layout and focusable DualText
+- DualText / ManifestoLens circular lens (~expand on enter)
+- Reduced motion: disable Lenis theater + WebGL + custom cursor; keep usable layout and focusable DualText fallback
 
 ## Error handling
 
@@ -175,7 +178,7 @@ Arabic stubs required for bilingual layout testing.
 ## Testing / handoff QA
 
 - Corner nav jumps to About / Films (Work) / Contact
-- DualText hover + keyboard focus
+- DualText / Hero manifesto lens reveal (or reduced-motion hover fallback)
 - FilmsList active bar + navigation to Work page
 - Reels play (YouTube + Vimeo)
 - EN ↔ AR RTL

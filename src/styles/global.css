@@ -12,8 +12,13 @@ body,
   min-height: 100%;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
@@ -41,4 +46,10 @@ button {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+/* Dynamic circle cursor — hide system pointer on fine pointers */
+html.has-circle-cursor,
+html.has-circle-cursor * {
+  cursor: none !important;
 }

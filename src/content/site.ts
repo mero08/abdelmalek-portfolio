@@ -17,7 +17,14 @@ export const site: SiteContent = {
       { en: 'THAT', ar: 'تصل' },
       { en: 'LAND', ar: 'حقاً' },
     ],
+    altLines: [
+      { en: 'FINDING', ar: 'نبحث' },
+      { en: 'MOMENTS', ar: 'عن لحظات' },
+      { en: 'THAT', ar: 'تضرب' },
+      { en: 'HIT', ar: 'بقوة' },
+    ],
     accentLineIndexes: [1],
+    altAccentLineIndexes: [1],
   },
   about: {
     en: 'I craft paced, emotional edits that make brands and stories feel intentional. Selective work. Clear communication. Delivery you can trust.',
