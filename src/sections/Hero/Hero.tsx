@@ -3,6 +3,7 @@ import { useWebglEnabled } from '../../components/webgl/useWebglEnabled'
 import { site } from '../../content/site'
 import { useLocale } from '../../i18n/useLocale'
 import styles from './Hero.module.css'
+import { ManifestoLens } from './ManifestoLens'
 
 export function Hero() {
   const { t } = useLocale()
@@ -18,19 +19,12 @@ export function Hero() {
       </div>
       <div className={styles.content}>
         <p className={styles.label}>{t(site.hero.label)}</p>
-        <h1 className={styles.manifesto}>
-          {site.hero.lines.map((line, index) => {
-            const accent = site.hero.accentLineIndexes.includes(index)
-            return (
-              <span
-                key={`${line.en}-${index}`}
-                className={accent ? styles.accentLine : styles.line}
-              >
-                {t(line)}
-              </span>
-            )
-          })}
-        </h1>
+        <ManifestoLens
+          lines={site.hero.lines}
+          altLines={site.hero.altLines}
+          accentLineIndexes={site.hero.accentLineIndexes}
+          altAccentLineIndexes={site.hero.altAccentLineIndexes}
+        />
         <div className={styles.scroll}>
           <span className={styles.scrollLine} aria-hidden />
           <span>{t({ en: 'Scroll', ar: 'مرر' })}</span>
