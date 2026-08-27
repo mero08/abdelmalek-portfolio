@@ -1,6 +1,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense, useEffect, useMemo, useRef, useState, type RefObject } from 'react'
-import { type ShaderMaterial } from 'three'
+import { Color, MathUtils, type ShaderMaterial } from 'three'
+import { EditorWorld } from './EditorWorld'
 import { useWebglEnabled } from './useWebglEnabled'
 import styles from './SiteAtmosphere.module.css'
 import {
@@ -61,8 +62,8 @@ const fragmentShader = `
     color += lift * breath;
 
     float enter = uEnter * uEnter;
-    color += warm * enter * 0.18;
-    color += vec3(0.1, 0.09, 0.08) * enter * 0.28;
+    color += warm * enter * 0.2;
+    color += vec3(0.1, 0.09, 0.08) * enter * 0.3;
 
     float grain = (hash(uv * vec2(1400.0, 900.0) + uTime) - 0.5) * 0.035;
     color += grain;
@@ -77,9 +78,8 @@ const fragmentShader = `
   }
 `
 
-function AtmospherePlane({ stateRef }: { stateRef: RefObject<AtmosphereState> }) {
+function AtmosphereBackdrop({ stateRef }: { stateRef: RefObject<AtmosphereState> }) {
   const materialRef = useRef<ShaderMaterial>(null)
-  const { viewport } = useThree()
 
   const uniforms = useMemo(
     () => ({
@@ -106,15 +106,54 @@ function AtmospherePlane({ stateRef }: { stateRef: RefObject<AtmosphereState> })
   })
 
   return (
-    <mesh scale={[viewport.width, viewport.height, 1]}>
+    <mesh position={[0, 0, -12]} scale={[28, 18, 1]}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
+        depthWrite={false}
       />
     </mesh>
+  )
+}
+
+function StageCamera({ stateRef }: { stateRef: RefObject<AtmosphereState> }) {
+  const { camera } = useThree()
+
+  useFrame(() => {
+    const s = stateRef.current
+    if (!s) return
+    const st = s.stage
+    const mx = (s.mouseX - 0.5) * 0.45
+    const my = (s.mouseY - 0.5) * 0.3
+    const heroHide = MathUtils.smoothstep(s.heroCover, 0.15, 0.9)
+
+    const tx = st.camX + mx * (1 - heroHide * 0.7)
+    const ty = st.camY - my * (1 - heroHide * 0.7)
+    const tz = st.camZ + heroHide * 2.5
+
+    camera.position.x = MathUtils.lerp(camera.position.x, tx, 0.07)
+    camera.position.y = MathUtils.lerp(camera.position.y, ty, 0.07)
+    camera.position.z = MathUtils.lerp(camera.position.z, tz, 0.07)
+    camera.lookAt(st.lookX, st.lookY, st.lookZ)
+  })
+
+  return null
+}
+
+function AtmosphereScene({ stateRef }: { stateRef: RefObject<AtmosphereState> }) {
+  return (
+    <>
+      <color attach="background" args={['#0d0d0d']} />
+      <fog attach="fog" args={[new Color('#0d0d0d'), 8, 22]} />
+      <ambientLight intensity={0.35} />
+      <directionalLight position={[4, 6, 5]} intensity={0.55} color="#e8e0d4" />
+      <StageCamera stateRef={stateRef} />
+      <AtmosphereBackdrop stateRef={stateRef} />
+      <EditorWorld stateRef={stateRef} />
+    </>
   )
 }
 
@@ -132,18 +171,17 @@ function AtmosphereCanvas({ stateRef }: { stateRef: RefObject<AtmosphereState> }
   return (
     <Canvas
       className={styles.canvas}
-      orthographic
-      camera={{ position: [0, 0, 1], near: 0.1, far: 10 }}
+      camera={{ position: [0.2, 0.1, 6.5], fov: 42, near: 0.1, far: 40 }}
       dpr={[1, 1.5]}
       frameloop={hidden ? 'never' : 'always'}
       gl={{
         alpha: false,
-        antialias: false,
+        antialias: true,
         powerPreference: 'high-performance',
       }}
       style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
     >
-      <AtmospherePlane stateRef={stateRef} />
+      <AtmosphereScene stateRef={stateRef} />
     </Canvas>
   )
 }
