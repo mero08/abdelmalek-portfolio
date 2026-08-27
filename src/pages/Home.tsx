@@ -1,3 +1,4 @@
+import { SiteAtmosphere } from '../components/webgl/SiteAtmosphere'
 import { About } from '../sections/About/About'
 import { Contact } from '../sections/Contact/Contact'
 import { Featured } from '../sections/Featured/Featured'
@@ -11,12 +12,15 @@ export function Home() {
   const revealRef = useSectionReveal()
 
   return (
-    <div ref={revealRef}>
-      <Hero />
-      <About />
-      <Reels />
-      <Featured />
-      <Contact />
-    </div>
+    <>
+      <SiteAtmosphere />
+      <div ref={revealRef} style={{ position: 'relative', zIndex: 1 }}>
+        <Hero />
+        <About />
+        <Reels />
+        <Featured />
+        <Contact />
+      </div>
+    </>
   )
 }
