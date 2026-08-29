@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { site } from '../../content/site'
 import { useLocale } from '../../i18n/useLocale'
 import styles from './Contact.module.css'
@@ -15,8 +16,8 @@ export function Contact() {
         {t({ en: 'Connect', ar: 'تواصل' })}
       </p>
 
-      <a
-        href={`mailto:${site.email}`}
+      <Link
+        to="/contact/message"
         className={styles.emailWipe}
         aria-label={`${site.email}. Alternate: ${emailAlt}`}
       >
@@ -26,7 +27,7 @@ export function Contact() {
             {emailAlt}
           </span>
         </span>
-      </a>
+      </Link>
 
       <a className={styles.phone} href={`tel:${site.phoneE164}`}>
         {site.phone}

@@ -38,7 +38,7 @@ describe('Nav', () => {
     const socials = screen.getByTestId('corner-socials')
     expect(within(socials).getByRole('link', { name: 'Instagram' })).toHaveAttribute(
       'href',
-      'https://instagram.com/',
+      'https://www.instagram.com/abdelmalek.marawan/',
     )
     expect(within(socials).getByRole('link', { name: 'Facebook' })).toHaveAttribute(
       'href',
@@ -46,7 +46,7 @@ describe('Nav', () => {
     )
     expect(within(socials).getByRole('link', { name: 'WhatsApp' })).toHaveAttribute(
       'href',
-      'https://wa.me/',
+      'https://wa.me/201154085914',
     )
   })
 })

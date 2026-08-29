@@ -6,10 +6,16 @@ describe('content modules', () => {
     expect(site.name).toBe('Abdelmalek Marwan')
     expect(site.email).toContain('@')
     expect(site.phone).toMatch(/^\+20/)
-    expect(site.phoneE164).toBe('+201025735207')
-    expect(site.socials.some((s) => s.id === 'whatsapp' && s.url.includes('201025735207'))).toBe(
+    expect(site.phoneE164).toBe('+201154085914')
+    expect(site.email).toBe('abdelmalekmarawan123@gmail.com')
+    expect(site.socials.some((s) => s.id === 'whatsapp' && s.url.includes('201154085914'))).toBe(
       true,
     )
+    expect(
+      site.socials.some(
+        (s) => s.id === 'instagram' && s.url.includes('abdelmalek.marawan'),
+      ),
+    ).toBe(true)
     expect(site.role.en.length).toBeGreaterThan(0)
     expect(site.role.ar.length).toBeGreaterThan(0)
     expect(site.socials.length).toBeGreaterThan(0)

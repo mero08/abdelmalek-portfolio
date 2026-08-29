@@ -59,12 +59,16 @@ export const site: SiteContent = {
       detail: { en: 'Studios, agencies, creators', ar: 'استوديوهات ووكالات ومبدعون' },
     },
   ],
-  email: 'hello@abdelmalek.studio',
-  phone: '+20 1025735207',
-  phoneE164: '+201025735207',
+  email: 'abdelmalekmarawan123@gmail.com',
+  phone: '+20 1154085914',
+  phoneE164: '+201154085914',
   socials: [
-    { id: 'instagram', label: 'Instagram', url: 'https://instagram.com/' },
+    {
+      id: 'instagram',
+      label: 'Instagram',
+      url: 'https://www.instagram.com/abdelmalek.marawan/',
+    },
     { id: 'facebook', label: 'Facebook', url: 'https://facebook.com/' },
-    { id: 'whatsapp', label: 'WhatsApp', url: 'https://wa.me/201025735207' },
+    { id: 'whatsapp', label: 'WhatsApp', url: 'https://wa.me/201154085914' },
   ],
 }

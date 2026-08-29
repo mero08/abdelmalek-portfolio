@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { LocaleProvider } from '../../i18n/LocaleContext'
 import { Contact } from './Contact'
@@ -6,21 +7,26 @@ import { Contact } from './Contact'
 describe('Contact section', () => {
   it('renders email wipe, phone, and socials', () => {
     render(
-      <LocaleProvider>
-        <Contact />
-      </LocaleProvider>,
+      <MemoryRouter>
+        <LocaleProvider>
+          <Contact />
+        </LocaleProvider>
+      </MemoryRouter>,
     )
 
-    const email = screen.getByRole('link', { name: /hello@abdelmalek\.studio/i })
-    expect(email).toHaveAttribute('href', 'mailto:hello@abdelmalek.studio')
+    const email = screen.getByRole('link', { name: /abdelmalekmarawan123@gmail\.com/i })
+    expect(email).toHaveAttribute('href', '/contact/message')
 
-    const phone = screen.getByRole('link', { name: /\+20 1025735207/i })
-    expect(phone).toHaveAttribute('href', 'tel:+201025735207')
+    const phone = screen.getByRole('link', { name: /\+20 1154085914/i })
+    expect(phone).toHaveAttribute('href', 'tel:+201154085914')
 
     expect(screen.getByRole('link', { name: /whatsapp/i })).toHaveAttribute(
       'href',
-      'https://wa.me/201025735207',
+      'https://wa.me/201154085914',
     )
-    expect(screen.queryByText(/available for selective projects/i)).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /instagram/i })).toHaveAttribute(
+      'href',
+      'https://www.instagram.com/abdelmalek.marawan/',
+    )
   })
 })
