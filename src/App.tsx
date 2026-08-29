@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { CircleCursor } from './components/CursorLens/CircleCursor'
 import { CursorLensProvider } from './components/CursorLens/CursorLensContext'
+import { GlowCursor } from './components/GlowCursor/GlowCursor'
 import { Nav } from './components/Nav/Nav'
 import { Threads } from './components/Threads/Threads'
 import { LocaleProvider } from './i18n/LocaleContext'
@@ -16,6 +17,7 @@ export default function App() {
     <LocaleProvider>
       <CursorLensProvider>
         <Threads hideOverHero />
+        <GlowCursor />
         <CircleCursor />
         <Nav />
         <Routes>

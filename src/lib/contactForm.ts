@@ -48,12 +48,15 @@ export async function sendContactMessage(
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        name,
-        email,
-        phone: phone || '(not provided)',
-        message,
-        _subject: 'Portfolio contact — Abdelmalek',
+        // Capitalized keys become the row labels in FormSubmit's table email
+        Name: name,
+        Email: email,
+        Phone: phone || '(not provided)',
+        Message: message,
+        _replyto: email,
+        _subject: `Portfolio contact — ${name}`,
         _template: 'table',
+        _captcha: 'false',
       }),
     })
 
@@ -61,7 +64,10 @@ export async function sendContactMessage(
       return { ok: false, error: 'send' }
     }
 
-    const data = (await res.json().catch(() => null)) as { success?: boolean | string } | null
+    const data = (await res.json().catch(() => null)) as {
+      success?: boolean | string
+    } | null
+
     if (data && data.success === false) {
       return { ok: false, error: 'send' }
     }

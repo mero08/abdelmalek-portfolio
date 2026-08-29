@@ -56,7 +56,32 @@ describe('sendContactMessage', () => {
     expect(url).toContain(encodeURIComponent('abdelmalekmarawan123@gmail.com'))
     expect(init.method).toBe('POST')
     const body = JSON.parse(String(init.body)) as Record<string, string>
-    expect(body.email).toBe('client@example.com')
-    expect(body.phone).toBe('+201154085914')
+    expect(body.Name).toBe('Client')
+    expect(body.Email).toBe('client@example.com')
+    expect(body.Phone).toBe('+201154085914')
+    expect(body.Message).toBe('Need an edit')
+    expect(body._replyto).toBe('client@example.com')
+    expect(body._template).toBe('table')
+    expect(body._subject).toContain('Client')
+  })
+
+  it('uses a placeholder phone when empty', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    await sendContactMessage({
+      name: 'Client',
+      email: 'client@example.com',
+      phone: '',
+      message: 'Need an edit',
+    })
+
+    const body = JSON.parse(
+      String((fetchMock.mock.calls[0] as [string, RequestInit])[1].body),
+    ) as Record<string, string>
+    expect(body.Phone).toBe('(not provided)')
   })
 })
