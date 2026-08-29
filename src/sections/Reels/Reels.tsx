@@ -1,6 +1,6 @@
 import { reels } from '../../content/reels'
 import { useLocale } from '../../i18n/useLocale'
-import { VideoPlayer } from '../../components/VideoPlayer/VideoPlayer'
+import { ReelsOrbitDial } from './ReelsOrbitDial'
 import styles from './Reels.module.css'
 
 export function Reels() {
@@ -13,19 +13,7 @@ export function Reels() {
       <h2 className={styles.heading} data-reveal>
         {t({ en: 'Reels', ar: 'ريلز' })}
       </h2>
-      <ul className={styles.strip}>
-        {reels.map((reel) => (
-          <li key={reel.id} className={styles.card}>
-            <VideoPlayer
-              provider={reel.provider}
-              url={reel.url}
-              cover={reel.cover}
-              title={t(reel.title)}
-            />
-            <p className={styles.title}>{t(reel.title)}</p>
-          </li>
-        ))}
-      </ul>
+      <ReelsOrbitDial reels={reels} />
     </section>
   )
 }

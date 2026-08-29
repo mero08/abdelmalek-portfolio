@@ -12,4 +12,4 @@ export function CircleCursor() {
   )
 }
 
-export { EXPAND_SIZE, IDLE_SIZE } from './cursorConfig'
+export { EXPAND_SIZE, IDLE_SIZE, SOCIAL_SIZE } from './cursorConfig'

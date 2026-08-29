@@ -122,6 +122,7 @@ function AtmosphereCanvas({ stateRef }: { stateRef: RefObject<AtmosphereState> }
   const [hidden, setHidden] = useState(
     typeof document !== 'undefined' ? document.hidden : false,
   )
+  const [heroDominant, setHeroDominant] = useState(true)
 
   useEffect(() => {
     const onVis = () => setHidden(document.hidden)
@@ -129,13 +130,25 @@ function AtmosphereCanvas({ stateRef }: { stateRef: RefObject<AtmosphereState> }
     return () => document.removeEventListener('visibilitychange', onVis)
   }, [])
 
+  useEffect(() => {
+    const tick = () => {
+      const cover = stateRef.current?.heroCover ?? 1
+      setHeroDominant(cover > 0.88)
+    }
+    tick()
+    const id = window.setInterval(tick, 400)
+    return () => window.clearInterval(id)
+  }, [stateRef])
+
+  const active = !hidden && !heroDominant
+
   return (
     <Canvas
       className={styles.canvas}
       orthographic
       camera={{ position: [0, 0, 1], near: 0.1, far: 10 }}
       dpr={[1, 1.5]}
-      frameloop={hidden ? 'never' : 'always'}
+      frameloop={active ? 'always' : 'never'}
       gl={{
         alpha: false,
         antialias: false,

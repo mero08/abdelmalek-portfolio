@@ -1,8 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
-import { CoverImage } from '../components/CoverImage/CoverImage'
-import { VideoPlayer } from '../components/VideoPlayer/VideoPlayer'
+import { FilmCover } from '../components/CoverImage/FilmCover'
+import coverStyles from '../components/CoverImage/CoverImage.module.css'
+import playerStyles from '../components/VideoPlayer/VideoPlayer.module.css'
 import { getAdjacentFilms, getFilmBySlug } from '../content/films'
 import { useLocale } from '../i18n/useLocale'
+import { toWatchUrl } from '../lib/embeds'
 import styles from './Work.module.css'
 
 export function Work() {
@@ -21,11 +23,12 @@ export function Work() {
 
   const { prev, next } = getAdjacentFilms(slug)
   const title = t(film.title)
+  const watchUrl = toWatchUrl(film.provider, film.url)
 
   return (
     <main className={styles.page}>
       <div className={styles.cover}>
-        <CoverImage cover={film.cover} title={title} />
+        <FilmCover film={film} title={title} className={coverStyles.img} loading="eager" />
       </div>
 
       <div className={styles.content}>
@@ -39,12 +42,24 @@ export function Work() {
         </header>
 
         <div className={styles.player}>
-          <VideoPlayer
-            provider={film.provider}
-            url={film.url}
-            cover={film.cover}
-            title={title}
-          />
+          <div className={styles.playerShell}>
+            <Link
+              to={`/work/${slug}/watch`}
+              className={playerStyles.frame}
+              aria-label={t({ en: `Play ${title}`, ar: `تشغيل ${title}` })}
+            >
+              <FilmCover film={film} title={title} className={coverStyles.img} />
+              <span className={playerStyles.play}>{t({ en: 'Play', ar: 'تشغيل' })}</span>
+            </Link>
+            <a
+              className={styles.playerWatchLink}
+              href={watchUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {t({ en: 'Open on YouTube', ar: 'فتح على يوتيوب' })}
+            </a>
+          </div>
         </div>
 
         <div className={styles.story}>

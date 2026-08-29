@@ -13,18 +13,63 @@
   color: var(--fg-muted);
 }
 
-.email {
-  display: block;
-  margin-bottom: 2rem;
+/* Email wipe: orange reveal top → bottom */
+.emailWipe {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  max-width: 100%;
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 5vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.02em;
+  line-height: 1.15;
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.emailWipeStack {
+  display: grid;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.emailWipePrimary,
+.emailWipeAlt {
+  grid-area: 1 / 1;
+  padding: 0.08em 0.18em;
+  white-space: nowrap;
+}
+
+.emailWipePrimary {
   color: var(--fg-bright);
+}
+
+.emailWipeAlt {
+  color: var(--bar-ink);
+  background: var(--accent);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.55s var(--ease-out);
+}
+
+.emailWipe:hover .emailWipeAlt,
+.emailWipe:focus-visible .emailWipeAlt {
+  clip-path: inset(0 0 0 0);
+}
+
+.phone {
+  display: block;
+  margin-bottom: 2rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--fg-bright);
+  text-decoration: none;
   transition: color 0.25s var(--ease-out);
 }
 
-.email:hover {
+.phone:hover {
   color: var(--accent);
 }
 
@@ -49,9 +94,8 @@
   color: var(--fg-bright);
 }
 
-.closing {
-  margin-top: clamp(3rem, 8vh, 5rem);
-  font-size: 0.95rem;
-  color: var(--fg-muted);
-  max-width: 28rem;
+@media (prefers-reduced-motion: reduce) {
+  .emailWipeAlt {
+    transition: none;
+  }
 }

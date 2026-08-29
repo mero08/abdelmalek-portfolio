@@ -11,9 +11,13 @@ import {
 import { prefersReducedMotion } from '../../lib/reducedMotion'
 import {
   CURSOR_EXPAND_ATTR,
+  CURSOR_MAGNET_ATTR,
   EXPAND_SIZE,
   IDLE_SIZE,
+  SOCIAL_SIZE,
 } from './cursorConfig'
+
+type CursorMode = 'idle' | 'lens' | 'social'
 
 type CursorEngineApi = {
   enabled: boolean
@@ -25,6 +29,7 @@ type CursorEngineApi = {
 const CursorEngineContext = createContext<CursorEngineApi | null>(null)
 
 const EXPAND_SEL = `[${CURSOR_EXPAND_ATTR}]`
+const MAGNET_SEL = `[${CURSOR_MAGNET_ATTR}]`
 const ENTER_PAD = 12
 const LEAVE_PAD = 28
 
@@ -71,6 +76,25 @@ function hitTestExpandZone(
   return null
 }
 
+function hitTestMagnet(x: number, y: number): HTMLElement | null {
+  const nodes = document.querySelectorAll<HTMLElement>(MAGNET_SEL)
+  let best: HTMLElement | null = null
+  let bestDist = Infinity
+  for (const node of nodes) {
+    const rect = node.getBoundingClientRect()
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    const dist = Math.hypot(x - cx, y - cy)
+    // Tight to icon center — orange disc is on the link, not a wide floating halo
+    const reach = Math.max(rect.width, rect.height) / 2 + 10
+    if (dist <= reach && dist < bestDist) {
+      best = node
+      bestDist = dist
+    }
+  }
+  return best
+}
+
 function clearExpandRoot(root: HTMLElement) {
   root.style.setProperty('--lens-size', '0px')
 }
@@ -82,8 +106,9 @@ export function CursorLensProvider({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLElement | null>(null)
   const posRef = useRef({ x: -9999, y: -9999 })
   const sizeProxy = useRef({ size: IDLE_SIZE })
-  const expandedRef = useRef(false)
   const activeRootRef = useRef<HTMLElement | null>(null)
+  const activeMagnetRef = useRef<HTMLElement | null>(null)
+  const modeRef = useRef<CursorMode>('idle')
   const targetSizeRef = useRef(IDLE_SIZE)
   const tweenRef = useRef<gsap.core.Tween | null>(null)
   const rafRef = useRef(0)
@@ -100,7 +125,7 @@ export function CursorLensProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!enabled) return
 
-    const applyMasks = () => {
+    const applyVisual = () => {
       const { x, y } = posRef.current
       const size = sizeProxy.current.size
       const activeRoot = activeRootRef.current
@@ -122,9 +147,23 @@ export function CursorLensProvider({ children }: { children: ReactNode }) {
 
       const disc = discRef.current
       if (disc) {
-        const expanded = size > IDLE_SIZE * 2
-        expandedRef.current = expanded
-        disc.dataset.expanded = expanded ? 'true' : 'false'
+        const mode = modeRef.current
+        disc.dataset.mode = mode
+        disc.dataset.expanded = mode === 'lens' ? 'true' : 'false'
+        // Size with width/height (not scale) so social disc stays sharp
+        if (mode === 'social') {
+          disc.style.width = `${size}px`
+          disc.style.height = `${size}px`
+          disc.style.transform = 'scale(1)'
+        } else if (mode === 'lens') {
+          disc.style.width = `${IDLE_SIZE}px`
+          disc.style.height = `${IDLE_SIZE}px`
+          disc.style.transform = 'scale(0.5)'
+        } else {
+          disc.style.width = `${IDLE_SIZE}px`
+          disc.style.height = `${IDLE_SIZE}px`
+          disc.style.transform = 'scale(1)'
+        }
       }
     }
 
@@ -143,19 +182,36 @@ export function CursorLensProvider({ children }: { children: ReactNode }) {
       }
       activeRootRef.current = activeRoot
 
-      const targetSize = activeRoot ? EXPAND_SIZE : IDLE_SIZE
+      const activeMagnet = activeRoot ? null : hitTestMagnet(x, y)
+      if (activeMagnetRef.current && activeMagnetRef.current !== activeMagnet) {
+        activeMagnetRef.current.removeAttribute('data-cursor-covered')
+      }
+      activeMagnetRef.current = activeMagnet
+      if (activeMagnet) activeMagnet.setAttribute('data-cursor-covered', '')
+
+      let mode: CursorMode = 'idle'
+      let targetSize = IDLE_SIZE
+      if (activeRoot) {
+        mode = 'lens'
+        targetSize = EXPAND_SIZE
+      } else if (activeMagnet) {
+        mode = 'social'
+        targetSize = SOCIAL_SIZE
+      }
+      modeRef.current = mode
+
       if (targetSizeRef.current !== targetSize) {
         targetSizeRef.current = targetSize
         tweenRef.current?.kill()
         tweenRef.current = gsap.to(sizeProxy.current, {
           size: targetSize,
-          duration: 0.35,
+          duration: mode === 'social' ? 0.22 : mode === 'idle' ? 0.28 : 0.35,
           ease: 'power3.out',
-          onUpdate: applyMasks,
+          onUpdate: applyVisual,
         })
       }
 
-      applyMasks()
+      applyVisual()
     }
 
     const schedule = () => {
@@ -182,7 +238,11 @@ export function CursorLensProvider({ children }: { children: ReactNode }) {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       tweenRef.current?.kill()
       if (activeRootRef.current) clearExpandRoot(activeRootRef.current)
+      if (activeMagnetRef.current) {
+        activeMagnetRef.current.removeAttribute('data-cursor-covered')
+      }
       activeRootRef.current = null
+      activeMagnetRef.current = null
       document.documentElement.style.removeProperty('--cx')
       document.documentElement.style.removeProperty('--cy')
     }

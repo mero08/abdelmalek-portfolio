@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -27,7 +27,7 @@ describe('Nav', () => {
     expect(document.documentElement.dir).toBe('rtl')
   })
 
-  it('renders socials as text links', () => {
+  it('renders stacked social icon links', () => {
     render(
       <MemoryRouter>
         <LocaleProvider>
@@ -35,10 +35,18 @@ describe('Nav', () => {
         </LocaleProvider>
       </MemoryRouter>,
     )
-    const instagram = screen
-      .getAllByRole('link')
-      .find((el) => el.getAttribute('href') === 'https://instagram.com/')
-    expect(instagram).toBeTruthy()
-    expect(instagram).toHaveTextContent('Instagram')
+    const socials = screen.getByTestId('corner-socials')
+    expect(within(socials).getByRole('link', { name: 'Instagram' })).toHaveAttribute(
+      'href',
+      'https://instagram.com/',
+    )
+    expect(within(socials).getByRole('link', { name: 'Facebook' })).toHaveAttribute(
+      'href',
+      'https://facebook.com/',
+    )
+    expect(within(socials).getByRole('link', { name: 'WhatsApp' })).toHaveAttribute(
+      'href',
+      'https://wa.me/',
+    )
   })
 })

@@ -1,7 +1,7 @@
 # Abdelmalek Portfolio — Reels Orbital Dial
 
 **Date:** 2026-08-28  
-**Status:** Approved for implementation planning  
+**Status:** Approved — **website implementation paused** (see Implementation directive)  
 **Related:**  
 - `2026-08-27-soft-living-atmosphere-design.md` (site-wide backdrop; Reels section mood stays cooler/darker)  
 - `2026-08-24-abdelmalek-minh-experience-design.md` (scroll + Lenis patterns)  
@@ -13,7 +13,7 @@
 
 Replace the current horizontal YouTube/Vimeo strip in **Reels** with an award-quality **3D orbital dial**: ~10 true vertical (9:16) reels on a ring, one **focus reel toward the camera**, draggable with tactile inertia, and **step autoplay** when idle. Only the focus reel streams Mux video; orbiters show covers. Feel must match the approved **elevated v5** prototype — balanced camera, no worm's-eye, no slow idle crawl.
 
-Deliverable: **complete end-to-end** in this repo — content model, R3F stage, physics, Mux playback, tests, live browser QA on desktop + touch.
+When website work resumes: **complete end-to-end** in this repo — content model, R3F stage, physics, Mux playback, tests, live browser QA on desktop + touch. Until then, the approved interactive prototype is the canonical deliverable (see below).
 
 ## Problem (current)
 
@@ -265,7 +265,57 @@ Before marking done:
 | Performance on low-end mobile | dpr cap, single stream, pause off-screen |
 | Arabic RTL | Heading/caption follow site i18n; ring layout stays symmetric |
 
+## Implementation directive (user lock)
+
+**2026-08-28 — do not continue website work.** User requested pausing React/portfolio implementation. Any future build must reproduce **exactly** what was approved in the visual companion — not an approximation, reinterpretation, or “close enough” port.
+
+### Canonical reference (source of truth)
+
+| Item | Location |
+|------|----------|
+| Approved interactive prototype | `.superpowers/brainstorm/7244-1787871686/content/reels-dial-elevated-v5.html` |
+| Written spec (this file) | `docs/superpowers/specs/2026-08-28-reels-orbit-dial-design.md` |
+
+**Parity rule:** Camera, sizing, idle step timing, drag physics, front-slot detection, depth styling, and interaction feel must match v5 before any other polish. If a port diverges, fix the port — do not change the spec to match a worse build.
+
+### v5 parameters (must not drift)
+
+| Parameter | Value |
+|-----------|-------|
+| `N` | 10 reels |
+| `RADIUS` | 215px |
+| `SLOT` | 36° (`360 / N`) |
+| `HOLD_MS` | 1600 |
+| `STEP_MS` | 700 |
+| `DAMP` | 0.94 |
+| `DRAG_SENS` | 0.35 (`dAngle = dx * 0.35`) |
+| `VEL_CLAMP` | ±28 |
+| `SNAP_LERP` | 0.15 |
+| Orbiter size | 90×160px |
+| Focus size | 148×264px |
+| Focus `zBoost` | 42 |
+| Orbiter scale range | `0.48 + depth * 0.4` |
+| Orbiter opacity range | `0.25 + depth * 0.62` |
+| Orbiter blur | `(1 - depth) * 1.3` px when > 0.15 |
+| `yTilt` | `sin(slotAngle) * -18` deg |
+| Perspective | 1000px |
+| `perspective-origin` | `50% 12%` |
+| World position | `top: 62%`, centered X |
+| World `rotateX` | **14deg** (not 48deg) |
+| Ring guide | 430px circle, `rotateX(78deg)` |
+| Front slot | max **+Z**, not min |
+| Idle | step advance only — **no** slow crawl |
+| Easing | `easeInOutCubic` on step |
+
+### Out of scope while paused
+
+- React `Reels.tsx` / R3F integration  
+- Mux player wiring in the portfolio  
+- `writing-plans` / implementation tasks for the website  
+- Any change that alters the approved v5 feel without explicit user request  
+
 ## Approval record
 
-- **2026-08-28:** Interactive prototype `reels-dial-elevated-v5.html` approved by user — *"great, very good, perfectly balanced, with no flaws whatsoever."*  
-- Design spec written for implementation planning via `writing-plans` skill.
+- **2026-08-28:** Interactive prototype `reels-dial-elevated-v5.html` approved — *"great, very good, perfectly balanced, with no flaws whatsoever."*  
+- **2026-08-28:** User paused website work; future implementation must match v5 and this spec exactly.  
+- Design spec written; website implementation plan deferred until user resumes.

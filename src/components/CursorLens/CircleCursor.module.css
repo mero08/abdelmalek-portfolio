@@ -7,9 +7,14 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 60;
+  z-index: 55;
   transform: translate3d(-9999px, -9999px, 0) translate(-50%, -50%);
   will-change: transform;
+}
+
+/* Reels expand overlay (z-index 200) sits above default cursor — lift while open */
+:global(html.reels-expand-scroll-lock) .track {
+  z-index: 250;
 }
 
 .disc {
@@ -17,14 +22,20 @@
   height: 12px;
   border-radius: 50%;
   background: var(--accent);
-  transition:
-    opacity 0.2s var(--ease-out),
-    transform 0.2s var(--ease-out);
+  transform: scale(1);
+  transform-origin: center;
+  will-change: width, height, transform, opacity;
+  /* Crisp circle edges even when size animates */
+  backface-visibility: hidden;
 }
 
+/* Manifesto / DualText: orange mask is the lens — hide the idle disc */
 .disc[data-mode='lens'],
 .disc[data-expanded='true'] {
-  /* Hide idle dot while orange mask is the visible lens — avoids double circle */
   opacity: 0;
-  transform: scale(0.5);
+}
+
+/* Social: orange highlight is on the icon itself — hide floating disc */
+.disc[data-mode='social'] {
+  opacity: 0;
 }

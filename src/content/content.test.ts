@@ -5,6 +5,11 @@ describe('content modules', () => {
     const { site } = await import('./site')
     expect(site.name).toBe('Abdelmalek Marwan')
     expect(site.email).toContain('@')
+    expect(site.phone).toMatch(/^\+20/)
+    expect(site.phoneE164).toBe('+201025735207')
+    expect(site.socials.some((s) => s.id === 'whatsapp' && s.url.includes('201025735207'))).toBe(
+      true,
+    )
     expect(site.role.en.length).toBeGreaterThan(0)
     expect(site.role.ar.length).toBeGreaterThan(0)
     expect(site.socials.length).toBeGreaterThan(0)
@@ -26,6 +31,12 @@ describe('content modules', () => {
   it('exposes reels as an array', async () => {
     const { reels } = await import('./reels')
     expect(Array.isArray(reels)).toBe(true)
+    expect(reels.length).toBe(10)
+    for (const reel of reels) {
+      expect(reel.muxPlaybackId.length).toBeGreaterThan(0)
+      expect(reel.cover).toContain('image.mux.com')
+      expect(reel.cover).toContain(reel.muxPlaybackId)
+    }
   })
 
   it('exposes placeholder hero lines and about alt', async () => {
@@ -34,5 +45,6 @@ describe('content modules', () => {
     expect(site.hero.accentLineIndexes.length).toBeGreaterThan(0)
     expect(site.aboutAlt.en.length).toBeGreaterThan(0)
     expect(site.aboutAlt.ar.length).toBeGreaterThan(0)
+    expect(site.aboutStats.length).toBe(3)
   })
 })

@@ -1,7 +1,12 @@
+import { useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { site } from '../../content/site'
+import type { SocialId } from '../../content/types'
 import { useLocale } from '../../i18n/useLocale'
+import { CURSOR_MAGNET_ATTR } from '../CursorLens/cursorConfig'
 import styles from './Nav.module.css'
+import { FacebookIcon, InstagramIcon, WhatsAppIcon } from './SocialIcons'
+import { useMagneticSocials } from './useMagneticSocials'
 
 const sections = [
   { id: 'about', en: 'About', ar: 'نبذة' },
@@ -9,10 +14,18 @@ const sections = [
   { id: 'contact', en: 'Contact', ar: 'تواصل' },
 ]
 
+const socialIcons: Record<SocialId, typeof InstagramIcon> = {
+  instagram: InstagramIcon,
+  facebook: FacebookIcon,
+  whatsapp: WhatsAppIcon,
+}
+
 export function Nav() {
   const { lang, setLang, t } = useLocale()
   const { pathname } = useLocation()
   const onHome = pathname === '/'
+  const socialsRef = useRef<HTMLUListElement>(null)
+  useMagneticSocials(socialsRef)
 
   return (
     <header className={styles.nav}>
@@ -40,14 +53,30 @@ export function Nav() {
           </button>
         </div>
       </div>
-      <ul className={styles.socials}>
-        {site.socials.map((social) => (
-          <li key={social.label}>
-            <a href={social.url} target="_blank" rel="noreferrer">
-              {social.label}
-            </a>
-          </li>
-        ))}
+      <ul
+        ref={socialsRef}
+        className={styles.socials}
+        aria-label="Social"
+        data-testid="corner-socials"
+      >
+        {site.socials.map((social) => {
+          const Icon = socialIcons[social.id]
+          return (
+            <li key={social.id}>
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={social.label}
+                className={styles.socialLink}
+                {...{ [CURSOR_MAGNET_ATTR]: '' }}
+              >
+                <span className={styles.socialDisc} aria-hidden />
+                <Icon className={styles.socialIcon} />
+              </a>
+            </li>
+          )
+        })}
       </ul>
     </header>
   )

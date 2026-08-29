@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Local brainstorm / agent scratch (not for deploy)
+.superpowers/
+
+# Vercel
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

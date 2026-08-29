@@ -2,34 +2,76 @@ import type { Film } from './types'
 
 export const films: Film[] = [
   {
-    slug: 'night-drive',
-    title: { en: 'Night Drive', ar: 'قيادة ليلية' },
-    hook: { en: 'A quiet city film about pace and light.', ar: 'فيلم هادئ عن المدينة والإيقاع والضوء.' },
-    story: {
-      en: 'Long-form piece built around rhythm, negative space, and restrained color.',
-      ar: 'عمل طويل مبني حول الإيقاع والفراغ واللون المتزن.',
+    slug: 'shams-w-hawa',
+    title: { en: 'Shams W Hawa', ar: 'شمس وهوا' },
+    hook: {
+      en: 'Music film — rhythm-led cut with warm grade.',
+      ar: 'فيلم موسيقي — مونتاج على الإيقاع وتدرج دافئ.',
     },
-    role: { en: 'Edit & finishing', ar: 'مونتاج وإنهاء' },
-    cover: null,
-    stills: [],
-    provider: 'vimeo',
-    url: 'https://vimeo.com/347119375',
-    sortOrder: 1,
-  },
-  {
-    slug: 'brand-pulse',
-    title: { en: 'Brand Pulse', ar: 'نبض العلامة' },
-    hook: { en: 'Commercial storytelling with sharp transitions.', ar: 'سرد إعلاني بانتقالات حادة.' },
     story: {
-      en: 'Featured commercial cut focusing on product moments and music hits.',
-      ar: 'مونتاج إعلاني يركز على لحظات المنتج وإيقاعات الموسيقى.',
+      en: 'Performance-led piece built around vocal phrasing and light shifts in the grade.',
+      ar: 'عمل مبني على الأداء وإيقاع الصوت وتغيرات الضوء في التصحيح.',
     },
     role: { en: 'Editor', ar: 'مونتير' },
     cover: null,
     stills: [],
     provider: 'youtube',
-    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    url: 'https://www.youtube.com/watch?v=sUpNxFQkyQg',
+    sortOrder: 1,
+  },
+  {
+    slug: 'azbet-el-khanazir',
+    title: { en: 'Azbet El Khanazir', ar: 'عزبة الخنازير' },
+    hook: {
+      en: 'Action beat — hard cuts and impact frames.',
+      ar: 'مشهد أكشن — قطع حادة ولقطات صادمة.',
+    },
+    story: {
+      en: 'Short-form fight sequence edited for clarity and hit timing.',
+      ar: 'تسلسل قتال قصير مونتاجه من أجل الوضوح وتوقيت الضربات.',
+    },
+    role: { en: 'Edit & finishing', ar: 'مونتاج وإنهاء' },
+    cover: null,
+    stills: [],
+    provider: 'youtube',
+    url: 'https://www.youtube.com/watch?v=ZvOucenhvmI',
     sortOrder: 2,
+  },
+  {
+    slug: 'samurai-seven',
+    title: { en: 'Samurai Seven', ar: 'الساموراى السبعة' },
+    hook: {
+      en: 'Anime reel — kinetic montage and score sync.',
+      ar: 'ريل أنمي — مونتاج حركي ومواءمة مع الموسيقى.',
+    },
+    story: {
+      en: 'High-energy sequence cut to music hits and character beats.',
+      ar: 'مشهد عالي الطاقة مقطوع على إيقاعات الموسيقى ولحظات الشخصيات.',
+    },
+    role: { en: 'Editor', ar: 'مونتير' },
+    cover: null,
+    stills: [],
+    provider: 'youtube',
+    url: 'https://www.youtube.com/watch?v=7Z1FKSqVJYg',
+    sortOrder: 3,
+  },
+  {
+    slug: 'baltafsil-waleed',
+    title: { en: 'Baltafsil — Waleed El Sisi', ar: 'بالتفصيل — وليد السيسي' },
+    hook: {
+      en: 'Podcast excerpt — long-form interview, tight mid-roll cut.',
+      ar: 'مقطع بودكاست — مقابلة طويلة، قطع مركز دقيق.',
+    },
+    story: {
+      en: 'Selected clip from Atheer’s Baltafsil podcast for narrative pacing tests.',
+      ar: 'مقطع مختار من بودكاست بالتفصيل على أثير لاختبار إيقاع السرد.',
+    },
+    role: { en: 'Editor', ar: 'مونتير' },
+    cover: null,
+    stills: [],
+    provider: 'youtube',
+    url: 'https://www.youtube.com/watch?v=045VJIe1fnU',
+    sortOrder: 4,
   },
 ]
 

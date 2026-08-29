@@ -16,10 +16,10 @@ describe('VideoPlayer', () => {
     )
     expect(screen.getByRole('button', { name: /play test reel/i })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /play test reel/i }))
-    expect(screen.getByTitle('Test Reel')).toHaveAttribute(
-      'src',
-      'https://www.youtube.com/embed/abc123XYZ_-?autoplay=1',
+    expect(screen.getByTitle('Test Reel').getAttribute('src')).toContain(
+      'https://www.youtube-nocookie.com/embed/abc123XYZ_-',
     )
+    expect(screen.getByTitle('Test Reel').getAttribute('src')).toContain('autoplay=1')
     expect(screen.getByRole('link', { name: /open video/i })).toHaveAttribute(
       'href',
       'https://www.youtube.com/watch?v=abc123XYZ_-',

@@ -4,10 +4,10 @@ import { describe, expect, it } from 'vitest'
 import { LocaleProvider } from '../../i18n/LocaleContext'
 import { Featured } from './Featured'
 
-function nightDriveLink() {
+function firstFilmLink() {
   const link = screen
     .getAllByRole('link')
-    .find((el) => el.getAttribute('href') === '/work/night-drive')
+    .find((el) => el.getAttribute('href') === '/work/shams-w-hawa')
   expect(link).toBeTruthy()
   return link!
 }
@@ -21,7 +21,7 @@ describe('Featured', () => {
         </LocaleProvider>
       </MemoryRouter>,
     )
-    expect(nightDriveLink()).toHaveAttribute('href', '/work/night-drive')
+    expect(firstFilmLink()).toHaveAttribute('href', '/work/shams-w-hawa')
   })
 
   it('marks the first film active by default', () => {
@@ -32,6 +32,6 @@ describe('Featured', () => {
         </LocaleProvider>
       </MemoryRouter>,
     )
-    expect(nightDriveLink()).toHaveAttribute('data-active', 'true')
+    expect(firstFilmLink()).toHaveAttribute('data-active', 'true')
   })
 })
