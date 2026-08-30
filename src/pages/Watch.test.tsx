@@ -29,10 +29,10 @@ describe('Watch page', () => {
   })
 
   it('links adjacent films to their watch pages', () => {
-    renderWatch('azbet-el-khanazir')
-    expect(screen.getByRole('link', { name: /shams w hawa/i })).toHaveAttribute(
+    renderWatch('aziz-el-sham-opening')
+    expect(screen.getByRole('link', { name: /balbaa/i })).toHaveAttribute(
       'href',
-      '/work/shams-w-hawa/watch',
+      '/work/balbaa/watch',
     )
     expect(screen.getByRole('link', { name: /samurai seven/i })).toHaveAttribute(
       'href',
@@ -42,7 +42,7 @@ describe('Watch page', () => {
 
   it('loads a fresh embed when navigating to another film', async () => {
     const user = userEvent.setup()
-    renderWatch('azbet-el-khanazir')
+    renderWatch('aziz-el-sham-opening')
 
     await user.click(screen.getByRole('link', { name: /samurai seven/i }))
 

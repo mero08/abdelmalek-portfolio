@@ -19,16 +19,16 @@ function renderWork(slug: string) {
 
 describe('Work page', () => {
   it('renders film story and navigation', () => {
-    renderWork('shams-w-hawa')
-    expect(screen.getByRole('heading', { name: /shams w hawa/i })).toBeInTheDocument()
+    renderWork('balbaa')
+    expect(screen.getByRole('heading', { name: /balbaa/i })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /back/i })).toHaveAttribute('href', '/#featured')
-    expect(screen.getByRole('link', { name: /play shams w hawa/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /play balbaa/i })).toHaveAttribute(
       'href',
-      '/work/shams-w-hawa/watch',
+      '/work/balbaa/watch',
     )
-    expect(screen.getByRole('link', { name: /azbet el khanazir/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /aziz el sham opening/i })).toHaveAttribute(
       'href',
-      '/work/azbet-el-khanazir',
+      '/work/aziz-el-sham-opening',
     )
   })
 
@@ -39,19 +39,19 @@ describe('Work page', () => {
 
   it('updates cover images when navigating to another film', async () => {
     const user = userEvent.setup()
-    renderWork('shams-w-hawa')
+    renderWork('balbaa')
 
-    expect(screen.getAllByRole('img', { name: /shams w hawa/i })[0]).toHaveAttribute(
+    expect(screen.getAllByRole('img', { name: /balbaa/i })[0]).toHaveAttribute(
       'src',
-      expect.stringContaining('sUpNxFQkyQg'),
+      expect.stringContaining('WYwJRndsxGc'),
     )
 
-    await user.click(screen.getByRole('link', { name: /azbet el khanazir/i }))
+    await user.click(screen.getByRole('link', { name: /aziz el sham opening/i }))
 
     await waitFor(() => {
-      expect(screen.getAllByRole('img', { name: /azbet el khanazir/i })[0]).toHaveAttribute(
+      expect(screen.getAllByRole('img', { name: /aziz el sham opening/i })[0]).toHaveAttribute(
         'src',
-        expect.stringContaining('ZvOucenhvmI'),
+        expect.stringContaining('NyILPGqIHd0'),
       )
     })
   })

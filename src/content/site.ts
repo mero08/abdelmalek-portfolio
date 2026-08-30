@@ -9,7 +9,7 @@ export const site: SiteContent = {
   hero: {
     label: {
       en: 'Abdelmalek Marwan',
-      ar: 'عبد المالك مروان',
+      ar: 'عبدالملك مروان',
     },
     lines: [
       { en: 'CUTTING', ar: 'نقطع' },
@@ -37,7 +37,7 @@ export const site: SiteContent = {
   aboutStats: [
     {
       id: 'edits',
-      value: 120,
+      value: 1000,
       suffix: '+',
       format: 'frames',
       label: { en: 'Videos edited', ar: 'فيديوهات مُعدّة' },
@@ -52,7 +52,7 @@ export const site: SiteContent = {
     },
     {
       id: 'clients',
-      value: 34,
+      value: 50,
       suffix: '+',
       format: 'count',
       label: { en: 'Clients & collaborators', ar: 'عملاء وشركاء' },

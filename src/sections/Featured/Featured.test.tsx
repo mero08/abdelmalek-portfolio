@@ -7,7 +7,7 @@ import { Featured } from './Featured'
 function firstFilmLink() {
   const link = screen
     .getAllByRole('link')
-    .find((el) => el.getAttribute('href') === '/work/shams-w-hawa')
+    .find((el) => el.getAttribute('href') === '/work/balbaa')
   expect(link).toBeTruthy()
   return link!
 }
@@ -21,7 +21,7 @@ describe('Featured', () => {
         </LocaleProvider>
       </MemoryRouter>,
     )
-    expect(firstFilmLink()).toHaveAttribute('href', '/work/shams-w-hawa')
+    expect(firstFilmLink()).toHaveAttribute('href', '/work/balbaa')
   })
 
   it('marks the first film active by default', () => {

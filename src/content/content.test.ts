@@ -35,9 +35,17 @@ describe('content modules', () => {
   })
 
   it('exposes reels as an array', async () => {
-    const { reels } = await import('./reels')
+    const { reels, DEFAULT_MUX_PLAYBACK_ID } = await import('./reels')
     expect(Array.isArray(reels)).toBe(true)
     expect(reels.length).toBe(10)
+    expect(reels.slice(0, 3).map((reel) => reel.muxPlaybackId)).toEqual([
+      'nwvaBievnXVHuFoVTnyxHVBpGtwnB28LeIqbhyOeSPA',
+      '3zrLkV02tEIjLPkKFpOz6E003ichN1WDjgv3HEHLLTeuU',
+      'iy8vqcttdrCtWbCxS3hUoyidhSMLKnmb2Tv01NzDto3w',
+    ])
+    expect(
+      reels.slice(3).every((reel) => reel.muxPlaybackId === DEFAULT_MUX_PLAYBACK_ID),
+    ).toBe(true)
     for (const reel of reels) {
       expect(reel.muxPlaybackId.length).toBeGreaterThan(0)
       expect(reel.cover).toContain('image.mux.com')
