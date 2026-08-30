@@ -75,7 +75,9 @@ export function useHeroChoreography({
       ScrollTrigger.create({
         trigger: section,
         start: 'top top',
-        end: '+=145%',
+        // Mobile keeps a full pin, but not the tall desktop scrub distance.
+        end: () =>
+          window.matchMedia('(max-width: 700px)').matches ? '+=100%' : '+=145%',
         pin,
         scrub: 0.4,
         anticipatePin: 1,

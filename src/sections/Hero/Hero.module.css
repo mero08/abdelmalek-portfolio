@@ -305,8 +305,92 @@
 }
 
 @media (max-width: 700px) {
+  .pin {
+    /* Clear fixed nav / home indicator; keep one full-screen composition. */
+    padding:
+      max(5.25rem, calc(env(safe-area-inset-top, 0px) + 4.25rem))
+      1.1rem
+      max(3.5rem, calc(env(safe-area-inset-bottom, 0px) + 2rem));
+  }
+
+  .content {
+    width: 100%;
+    max-width: 100%;
+    /* Less upward drift so the block stays centered on short phones. */
+    transform: translate3d(0, calc(var(--hero-p) * -1.6rem), 0);
+  }
+
+  .label {
+    margin: 0 0 1.1rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+  }
+
+  .manifesto {
+    width: 100%;
+    max-width: 100%;
+    /* Fit longest line (STORIES) to the phone width — avoid vh-driven blowouts. */
+    font-size: clamp(2.85rem, 13.8vw, 3.9rem);
+    line-height: 0.86;
+    letter-spacing: -0.036em;
+  }
+
+  :global(html[lang='ar']) .manifesto {
+    max-width: 100%;
+    font-size: clamp(2.35rem, 11vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: 0;
+  }
+
+  .manifestoLayer,
+  .manifestoReveal {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .line,
+  .accentLine,
+  .revealLine,
+  .revealAccent {
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  .scrollFade {
+    margin-top: clamp(1.6rem, 4.5vh, 2.75rem);
+  }
+
+  .scroll {
+    gap: 0.75rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+  }
+
+  .scrollLine {
+    flex-basis: 2.25rem;
+  }
+
   .cinemaImg {
     object-position: center 32%;
+  }
+
+  .melt {
+    height: clamp(3.25rem, 14vh, 6rem);
+  }
+}
+
+/* Compact / short phones (SE, landscape-ish heights) */
+@media (max-width: 700px) and (max-height: 720px) {
+  .manifesto {
+    font-size: clamp(2.4rem, 11.5vw, 3.25rem);
+  }
+
+  .label {
+    margin-bottom: 0.85rem;
+  }
+
+  .scrollFade {
+    margin-top: 1.25rem;
   }
 }
 
