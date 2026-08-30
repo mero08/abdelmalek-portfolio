@@ -1,5 +1,4 @@
-import { Suspense, useRef } from 'react'
-import { HeroScene } from '../../components/webgl/HeroScene'
+import { lazy, Suspense, useRef } from 'react'
 import { useWebglEnabled } from '../../components/webgl/useWebglEnabled'
 import { site } from '../../content/site'
 import { useLocale } from '../../i18n/useLocale'
@@ -7,6 +6,12 @@ import { HERO_CINEMA_SRC } from './heroMedia'
 import styles from './Hero.module.css'
 import { ManifestoLens } from './ManifestoLens'
 import { useHeroChoreography } from './useHeroChoreography'
+
+const HeroScene = lazy(() =>
+  import('../../components/webgl/HeroScene').then((m) => ({
+    default: m.HeroScene,
+  })),
+)
 
 export function Hero() {
   const { t } = useLocale()

@@ -146,7 +146,7 @@ function HeroCanvas({ progressRef }: HeroCanvasProps) {
     <Canvas
       orthographic
       camera={{ position: [0, 0, 1], near: 0.1, far: 10 }}
-      dpr={[1, 1.5]}
+      dpr={[1, 1.25]}
       frameloop={hidden || !animating ? 'never' : 'always'}
       gl={{
         alpha: false,

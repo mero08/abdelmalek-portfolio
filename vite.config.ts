@@ -10,4 +10,20 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (id.includes('three') || id.includes('@react-three')) return 'three'
+          if (id.includes('ogl')) return 'ogl'
+          if (id.includes('gsap') || id.includes('lenis')) return 'motion'
+          if (id.includes('@mux')) return 'mux'
+          if (id.includes('react-router')) return 'router'
+          if (id.includes('react-dom') || id.includes('/react/')) return 'react'
+        },
+      },
+    },
+  },
 })
