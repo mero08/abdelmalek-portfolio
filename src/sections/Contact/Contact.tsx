@@ -9,6 +9,10 @@ export function Contact() {
     en: '100% chance I read it.',
     ar: 'أقرأ الرسائل دائماً.',
   })
+  const writeLabel = t({
+    en: 'Write a message',
+    ar: 'اكتب رسالة',
+  })
 
   return (
     <section id="contact" className={styles.section}>
@@ -19,7 +23,7 @@ export function Contact() {
       <Link
         to="/contact/message"
         className={styles.emailWipe}
-        aria-label={`${site.email}. Alternate: ${emailAlt}`}
+        aria-label={`${writeLabel}. ${site.email}. ${emailAlt}`}
       >
         <span className={styles.emailWipeStack}>
           <span className={styles.emailWipePrimary}>{site.email}</span>
@@ -27,6 +31,7 @@ export function Contact() {
             {emailAlt}
           </span>
         </span>
+        <span className={styles.emailCue}>{writeLabel}</span>
       </Link>
 
       <a className={styles.phone} href={`tel:${site.phoneE164}`}>

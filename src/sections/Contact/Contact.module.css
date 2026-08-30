@@ -15,14 +15,17 @@
 
 /* Email wipe: orange reveal top → bottom */
 .emailWipe {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
   margin-bottom: 0.75rem;
   max-width: 100%;
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 5vw, 3rem);
+  font-size: clamp(1.35rem, 4.6vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.2;
   outline: none;
   text-decoration: none;
   color: inherit;
@@ -38,7 +41,9 @@
 .emailWipeAlt {
   grid-area: 1 / 1;
   padding: 0.08em 0.18em;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .emailWipePrimary {
@@ -55,6 +60,17 @@
 .emailWipe:hover .emailWipeAlt,
 .emailWipe:focus-visible .emailWipeAlt {
   clip-path: inset(0 0 0 0);
+}
+
+.emailCue {
+  display: none;
+  padding-inline: 0.18em;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 .phone {
@@ -92,6 +108,42 @@
 
 .socials a:hover {
   color: var(--fg-bright);
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding-bottom: calc(clamp(5rem, 14vh, 9rem) + 4.5rem);
+  }
+
+  .kicker {
+    font-size: 0.78rem;
+  }
+
+  /* Hover wipe never fires on touch — show a clear compose cue instead. */
+  .emailCue {
+    display: inline-block;
+  }
+
+  .emailWipeAlt {
+    display: none;
+  }
+
+  .socials a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.84rem;
+  }
+}
+
+@media (hover: none) {
+  .emailCue {
+    display: inline-block;
+  }
+
+  .emailWipeAlt {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

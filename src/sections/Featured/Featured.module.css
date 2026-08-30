@@ -85,14 +85,26 @@
 }
 
 @media (max-width: 800px) {
+  .kicker {
+    font-size: 0.78rem;
+  }
+
   .row {
     grid-template-columns: 1fr;
     gap: 0.35rem;
     padding-block: 1.1rem;
   }
 
+  .title {
+    font-size: clamp(1.85rem, 9.5vw, 3.25rem);
+    line-height: 0.95;
+  }
+
+  /* Hooks must stay readable without hover on touch devices. */
   .hook {
     max-width: 36rem;
+    opacity: 0.78;
+    font-size: 0.88rem;
   }
 
   .row[data-active='true'] .hook {

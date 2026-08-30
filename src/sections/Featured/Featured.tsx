@@ -27,6 +27,7 @@ export function Featured() {
                 data-active={isActive ? 'true' : 'false'}
                 aria-label={t(film.title)}
                 onMouseEnter={() => setActive(index)}
+                onPointerEnter={() => setActive(index)}
                 onFocus={() => setActive(index)}
               >
                 <span className={styles.bar} aria-hidden={!isActive} />

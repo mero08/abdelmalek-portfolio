@@ -10,10 +10,13 @@ export function formatStatValue(
 
   switch (format) {
     case 'frames':
-      return `${String(n).padStart(6, '0')}${suffix}`
+      // Keep the counter feel for small values; drop leading zeros once large.
+      if (n >= 1000) return `${n}${suffix}`
+      return `${String(n).padStart(4, '0')}${suffix}`
     case 'timecode':
       return `00:${String(n).padStart(2, '0')}${suffix}`
     case 'count':
-      return `${String(n).padStart(5, '0')}${suffix}`
+      if (n >= 100) return `${n}${suffix}`
+      return `${String(n).padStart(3, '0')}${suffix}`
   }
 }

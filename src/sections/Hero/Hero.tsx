@@ -1,5 +1,8 @@
-import { lazy, Suspense, useRef } from 'react'
-import { useWebglEnabled } from '../../components/webgl/useWebglEnabled'
+import { lazy, Suspense, useRef, useState } from 'react'
+import {
+  prefersCssHeroPlate,
+  useWebglEnabled,
+} from '../../components/webgl/useWebglEnabled'
 import { site } from '../../content/site'
 import { useLocale } from '../../i18n/useLocale'
 import { HERO_CINEMA_SRC } from './heroMedia'
@@ -15,7 +18,9 @@ const HeroScene = lazy(() =>
 
 export function Hero() {
   const { t } = useLocale()
-  const webglEnabled = useWebglEnabled()
+  const webglCapable = useWebglEnabled()
+  const [cssPlate] = useState(() => prefersCssHeroPlate())
+  const webglEnabled = webglCapable && !cssPlate
   const sectionRef = useRef<HTMLElement>(null)
   const pinRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef(0)

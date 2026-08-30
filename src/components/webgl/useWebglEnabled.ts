@@ -25,3 +25,9 @@ export function useWebglEnabled(): boolean {
 
   return enabled
 }
+
+/** Prefer the CSS cinema still on phones — sharper, lighter, visible at rest. */
+export function prefersCssHeroPlate(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
+}

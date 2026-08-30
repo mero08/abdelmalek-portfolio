@@ -156,6 +156,18 @@ html[dir='rtl'] .cardRule {
   .stats {
     gap: 0.9rem;
   }
+
+  .kicker {
+    font-size: 0.78rem;
+  }
+
+  .cardIndex {
+    font-size: 0.72rem;
+  }
+
+  .cardLabel {
+    font-size: 0.84rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -14,8 +14,11 @@ describe('Contact section', () => {
       </MemoryRouter>,
     )
 
-    const email = screen.getByRole('link', { name: /abdelmalekmarawan123@gmail\.com/i })
+    const email = screen.getByRole('link', {
+      name: /abdelmalekmarawan123@gmail\.com/i,
+    })
     expect(email).toHaveAttribute('href', '/contact/message')
+    expect(email).toHaveTextContent(/write a message/i)
 
     const phone = screen.getByRole('link', { name: /\+20 1154085914/i })
     expect(phone).toHaveAttribute('href', 'tel:+201154085914')

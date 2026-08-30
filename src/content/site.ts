@@ -27,12 +27,12 @@ export const site: SiteContent = {
     altAccentLineIndexes: [1],
   },
   about: {
-    en: 'I craft paced, emotional edits that make brands and stories feel intentional. Selective work. Clear communication. Delivery you can trust.',
-    ar: 'أصنع مونتاجاً متزناً وعاطفياً يجعل العلامات والقصص تبدو مقصودة. عمل انتقائي. تواصل واضح. تسليم يمكنك الوثوق به.',
+    en: 'Professional Editor. Skilled Videographer. A partner focused on one thing — getting you the results you want.',
+    ar: 'مونتير محترف. فيديوجرافر متمكن. شريك يركز على هدف واحد — إيصالك للنتيجة التي تريدها.',
   },
   aboutAlt: {
-    en: 'I cut until the feeling is obvious. No noise. No filler. Just the line that lands.',
-    ar: 'أقطع حتى يظهر الإحساس. بلا ضجيج. بلا حشو. السطر الذي يصل فقط.',
+    en: 'Where ideas find their light.',
+    ar: 'حيث تجد الأفكار نورها.',
   },
   aboutStats: [
     {
