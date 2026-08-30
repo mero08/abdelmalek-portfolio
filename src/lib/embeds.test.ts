@@ -7,6 +7,8 @@ describe('embeds', () => {
     expect(embed).toContain('https://www.youtube-nocookie.com/embed/abc123XYZ_-')
     expect(embed).toContain('rel=0')
     expect(embed).toContain('modestbranding=1')
+    expect(embed).toContain('playsinline=1')
+    expect(embed).toContain('enablejsapi=1')
     expect(toEmbedSrc('youtube', 'https://youtu.be/abc123XYZ_-')).toContain(
       'https://www.youtube-nocookie.com/embed/abc123XYZ_-',
     )

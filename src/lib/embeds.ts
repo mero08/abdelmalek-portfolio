@@ -48,11 +48,17 @@ function buildYoutubeEmbed(id: string, autoplay: boolean): string {
   const params = new URLSearchParams({
     rel: '0',
     modestbranding: '1',
+    playsinline: '1',
+    enablejsapi: '1',
   })
   if (typeof window !== 'undefined' && window.location.origin) {
     params.set('origin', window.location.origin)
   }
-  if (autoplay) params.set('autoplay', '1')
+  if (autoplay) {
+    params.set('autoplay', '1')
+    // Helps autoplay start reliably in Chromium while keeping audio available after
+    params.set('mute', '0')
+  }
   return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`
 }
 

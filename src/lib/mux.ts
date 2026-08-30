@@ -18,3 +18,35 @@ export function muxThumbnailUrl(
   })
   return `https://image.mux.com/${playbackId}/thumbnail.webp?${params.toString()}`
 }
+
+/** HLS master playlist — warm this to start playback faster. */
+export function muxStreamUrl(playbackId: string): string {
+  return `https://stream.mux.com/${playbackId}.m3u8`
+}
+
+const warmedStreams = new Set<string>()
+
+/** Prefetch a Mux HLS playlist (and optional poster) without playing. */
+export function warmMuxPlayback(
+  playbackId: string,
+  options?: { poster?: string },
+): void {
+  if (typeof window === 'undefined' || !playbackId) return
+  if (warmedStreams.has(playbackId)) return
+  warmedStreams.add(playbackId)
+
+  // Fire-and-forget playlist warm so the first play has CDN cache heat
+  void fetch(muxStreamUrl(playbackId), {
+    mode: 'cors',
+    credentials: 'omit',
+    cache: 'force-cache',
+  }).catch(() => {
+    warmedStreams.delete(playbackId)
+  })
+
+  if (options?.poster) {
+    const img = new Image()
+    img.decoding = 'async'
+    img.src = options.poster
+  }
+}

@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 import type { Reel } from '../../content/types'
 import { useLocale } from '../../i18n/useLocale'
+import { warmMuxPlayback } from '../../lib/mux'
 import { prefersReducedMotion } from '../../lib/reducedMotion'
 import { ReelsExpandOverlay } from './ReelsExpandOverlay'
 import { ReelsOrbitFallback } from './ReelsOrbitFallback'
 import { ReelsOrbitPhone } from './ReelsOrbitPhone'
 import styles from './Reels.module.css'
+import { prefetchMuxPlayer } from './lazyMuxPlayer'
 import { REELS_EXPAND } from './reelsExpandConfig'
 import type { ExpandRect } from './reelsExpandLayout'
 import { REELS_ORBIT } from './reelsOrbitConfig'
@@ -51,6 +53,8 @@ export function ReelsOrbitDial({ reels }: ReelsOrbitDialProps) {
   const tapStartRef = useRef<{ x: number; y: number; t: number } | null>(null)
   const [visible, setVisible] = useState(false)
   const [expandSession, setExpandSession] = useState<ExpandSession | null>(null)
+  const previousActiveRef = useRef(0)
+  const retainedIndexRef = useRef<number | null>(null)
   const reducedMotion = prefersReducedMotion()
 
   const expanded = expandSession !== null
@@ -60,6 +64,13 @@ export function ReelsOrbitDial({ reels }: ReelsOrbitDialProps) {
     paused: !visible || expanded,
     frozen: expanded,
   })
+
+  // Sync during render so the previous center keeps Mux mounted (no one-frame unmount).
+  if (previousActiveRef.current !== physics.activeIndex) {
+    retainedIndexRef.current = previousActiveRef.current
+    previousActiveRef.current = physics.activeIndex
+  }
+  const retainedIndex = retainedIndexRef.current
 
   useEffect(() => {
     focusPhoneRef.current = physics.getPhoneEl(physics.activeIndex)
@@ -71,11 +82,22 @@ export function ReelsOrbitDial({ reels }: ReelsOrbitDialProps) {
 
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { rootMargin: '80px 0px', threshold: 0.12 },
+      { rootMargin: '240px 0px', threshold: 0.05 },
     )
     observer.observe(stage)
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    if (!visible) return
+    prefetchMuxPlayer()
+    const active = reels[physics.activeIndex]
+    if (active) warmMuxPlayback(active.muxPlaybackId, { poster: active.cover })
+    const prev = reels[(physics.activeIndex - 1 + reels.length) % reels.length]
+    const next = reels[(physics.activeIndex + 1) % reels.length]
+    if (prev) warmMuxPlayback(prev.muxPlaybackId, { poster: prev.cover })
+    if (next) warmMuxPlayback(next.muxPlaybackId, { poster: next.cover })
+  }, [physics.activeIndex, reels, visible])
 
   const bindStageRef = (node: HTMLDivElement | null) => {
     stageRef.current = node
@@ -193,6 +215,7 @@ export function ReelsOrbitDial({ reels }: ReelsOrbitDialProps) {
               <div className={styles.ringGuide} aria-hidden />
               {reels.map((reel, index) => {
                 const isCenter = index === physics.activeIndex
+                const retainPlayer = index === retainedIndex
 
                 return (
                   <ReelsOrbitPhone
@@ -201,6 +224,7 @@ export function ReelsOrbitDial({ reels }: ReelsOrbitDialProps) {
                     cover={reel.cover}
                     title={t(reel.title)}
                     isCenter={isCenter}
+                    retainPlayer={retainPlayer}
                     orbitIndex={index}
                     registerPhone={physics.registerPhone}
                     muxPlaybackId={reel.muxPlaybackId}

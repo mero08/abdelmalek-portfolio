@@ -109,6 +109,14 @@
   cursor: pointer;
 }
 
+/* Flatten compositing while Mux plays — 3D parents stutter long VODs */
+.phoneVideoLive {
+  transform-style: flat;
+  backface-visibility: hidden;
+  will-change: transform;
+  isolation: isolate;
+}
+
 .phoneHiddenFocus {
   opacity: 0 !important;
 }
@@ -386,6 +394,13 @@
   --controls: none;
   --media-object-fit: cover;
   --media-object-position: center;
+}
+
+.muxPlayerParked {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .playRing {

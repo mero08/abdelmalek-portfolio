@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getAdjacentFilms, getFilmBySlug } from '../content/films'
 import { useLocale } from '../i18n/useLocale'
-import { toEmbedSrc, toWatchUrl } from '../lib/embeds'
+import { resolveFilmCover, toEmbedSrc, toWatchUrl } from '../lib/embeds'
 import workStyles from './Work.module.css'
 import styles from './Watch.module.css'
 
@@ -13,6 +13,7 @@ export function Watch() {
   const title = film ? t(film.title) : ''
   const { prev, next } = getAdjacentFilms(slug)
   const [embedReady, setEmbedReady] = useState(false)
+  const [embedEpoch, setEmbedEpoch] = useState(0)
   const embedSrc = useMemo(
     () => (film ? toEmbedSrc(film.provider, film.url, { autoplay: true }) : null),
     [film],
@@ -20,7 +21,20 @@ export function Watch() {
 
   useEffect(() => {
     setEmbedReady(false)
+    setEmbedEpoch(0)
   }, [slug])
+
+  // Warm adjacent film posters so next/prev watch feels instant
+  useEffect(() => {
+    for (const neighbor of [prev, next]) {
+      if (!neighbor) continue
+      const cover = resolveFilmCover(neighbor)
+      if (!cover) continue
+      const img = new Image()
+      img.decoding = 'async'
+      img.src = cover
+    }
+  }, [next, prev])
 
   if (!film || !embedSrc) {
     return (
@@ -46,14 +60,21 @@ export function Watch() {
         <div className={styles.frame} aria-busy={!embedReady}>
           {!embedReady ? <div className={styles.embedLoading} aria-hidden /> : null}
           <iframe
-            key={slug}
+            key={`${slug}-${embedEpoch}`}
             className={styles.iframe}
             src={embedSrc}
             title={title}
+            loading="eager"
             referrerPolicy="strict-origin-when-cross-origin"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             onLoad={() => setEmbedReady(true)}
+            onError={() => {
+              if (embedEpoch < 1) {
+                setEmbedReady(false)
+                setEmbedEpoch(1)
+              }
+            }}
           />
         </div>
       </div>

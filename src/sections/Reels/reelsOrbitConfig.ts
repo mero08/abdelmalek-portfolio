@@ -1,8 +1,8 @@
 /** Locked v5 elevated-dial parameters — do not drift without spec update. */
 export const REELS_ORBIT = {
   RADIUS: 215,
-  /** Passive autoplay: hold on each reel before stepping. */
-  IDLE_HOLD_MS: 5200,
+  /** Passive autoplay: hold on each reel before stepping (longer = fewer cold starts). */
+  IDLE_HOLD_MS: 9000,
   /** After the user drags the dial, wait longer before auto-advancing again. */
   ENGAGE_HOLD_MS: 11000,
   /** How long after last interaction the extended hold stays active. */

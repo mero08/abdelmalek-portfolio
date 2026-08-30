@@ -1,5 +1,4 @@
 import {
-  lazy,
   Suspense,
   useCallback,
   useEffect,
@@ -10,15 +9,11 @@ import {
 import { createPortal } from 'react-dom'
 import type { Reel } from '../../content/types'
 import styles from './Reels.module.css'
+import { LazyMuxPlayer } from './lazyMuxPlayer'
 import { REELS_EXPAND } from './reelsExpandConfig'
 import { rectToShellStyle, targetExpandRect, type ExpandRect } from './reelsExpandLayout'
 import { useExpandScrollLock } from './useExpandScrollLock'
-
-const LazyMuxPlayer = lazy(async () => {
-  const mod = await import('@mux/mux-player-react')
-  return { default: mod.default }
-})
-
+import { useMuxPlaybackStability } from './useMuxPlaybackStability'
 type MuxMediaElement = HTMLMediaElement & {
   muted: boolean
   loop: boolean
@@ -70,6 +65,10 @@ export function ReelsExpandOverlay({
   const [paused, setPaused] = useState(false)
 
   useExpandScrollLock(true)
+  useMuxPlaybackStability(videoWrapRef, {
+    enabled: true,
+    playbackId: reel.muxPlaybackId,
+  })
 
   const getPlayer = useCallback(() => {
     if (playerRef.current) return playerRef.current
@@ -236,13 +235,14 @@ export function ReelsExpandOverlay({
               muted
               autoPlay
               playsInline
-              preload="metadata"
+              preload="auto"
+              crossOrigin="anonymous"
+              preferPlayback="mse"
               nohotkeys
               disablePictureInPicture
               accentColor="#ff4d2e"
               data-testid="reels-expand-mux"
-            />
-          </Suspense>
+            />          </Suspense>
           <div className={styles.expandOverlay}>
             <button
               type="button"

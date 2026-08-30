@@ -1,4 +1,11 @@
-import { forwardRef, memo, useState, type MouseEvent, type PointerEvent as ReactPointerEvent, type Ref } from 'react'
+import {
+  forwardRef,
+  memo,
+  useState,
+  type MouseEvent,
+  type PointerEvent as ReactPointerEvent,
+  type Ref,
+} from 'react'
 import { ReelsFocusPlayer } from './ReelsFocusPlayer'
 import styles from './Reels.module.css'
 
@@ -7,6 +14,8 @@ type ReelsOrbitPhoneProps = {
   cover: string
   title: string
   isCenter: boolean
+  /** Keep Mux mounted (paused) when this phone leaves center. */
+  retainPlayer?: boolean
   muxPlaybackId: string
   playing: boolean
   hiddenForExpand?: boolean
@@ -24,6 +33,7 @@ export const ReelsOrbitPhone = memo(
       cover,
       title,
       isCenter,
+      retainPlayer = false,
       muxPlaybackId,
       playing,
       hiddenForExpand = false,
@@ -36,6 +46,7 @@ export const ReelsOrbitPhone = memo(
     ref: Ref<HTMLDivElement>,
   ) {
     const [playbackActive, setPlaybackActive] = useState(false)
+    const showPlayer = isCenter || retainPlayer
 
     const bindRef = (node: HTMLDivElement | null) => {
       registerPhone(orbitIndex, node)
@@ -51,7 +62,9 @@ export const ReelsOrbitPhone = memo(
         ref={bindRef}
         className={`${styles.phone} ${isCenter ? styles.phoneCenter : ''} ${
           hiddenForExpand ? styles.phoneHiddenFocus : ''
-        } ${playbackActive ? styles.phonePlaying : ''}`}
+        } ${playbackActive ? styles.phonePlaying : ''} ${
+          isCenter && playing ? styles.phoneVideoLive : ''
+        }`}
         aria-hidden={!isCenter}
         onPointerDown={isCenter ? onCenterPointerDown : undefined}
         onPointerUp={isCenter ? onCenterPointerUp : undefined}
@@ -64,7 +77,7 @@ export const ReelsOrbitPhone = memo(
             : undefined
         }
       >
-        {isCenter ? (
+        {showPlayer ? (
           <>
             <ReelsFocusPlayer
               key={reelId}

@@ -67,7 +67,9 @@ export function computePhoneLayouts(
     const scale = isCenter ? 1 : 0.48 + depth * 0.4
     const opacity = isCenter ? 1 : 0.25 + depth * 0.62
     const blurPx = isCenter ? 0 : (1 - depth) * 1.3
-    const yTilt = Math.sin(((angle + slotAngle(i, count)) * Math.PI) / 180) * -18
+    const yTilt = isCenter
+      ? 0
+      : Math.sin(((angle + slotAngle(i, count)) * Math.PI) / 180) * -18
     const lift = isCenter ? -4 : (1 - depth) * 4
     const zBoost = isCenter ? REELS_ORBIT.FOCUS_Z_BOOST : 0
 
@@ -77,7 +79,9 @@ export function computePhoneLayouts(
       opacity,
       blurPx: blurPx > 0.15 ? blurPx : 0,
       zIndex: isCenter ? 40 : Math.round(depth * 20),
-      transform: `translate3d(${x}px, ${lift}px, ${z + zBoost}px) rotateY(${yTilt}deg) scale(${scale})`,
+      transform: isCenter
+        ? `translate3d(${x}px, ${lift}px, ${z + zBoost}px) scale(${scale})`
+        : `translate3d(${x}px, ${lift}px, ${z + zBoost}px) rotateY(${yTilt}deg) scale(${scale})`,
     })
   }
 
